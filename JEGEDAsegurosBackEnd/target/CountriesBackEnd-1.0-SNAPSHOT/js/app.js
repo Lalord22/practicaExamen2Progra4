@@ -324,8 +324,8 @@ renderLogin = () => {
   // Call the renderLogin method to generate the login form HTML
   const loginFormHTML = this.renderLogin();
   
-  // Append the login form HTML to the body
-  document.body.innerHTML += loginFormHTML;
+  // Replace the body content, excluding the banner, with the login form HTML
+  document.querySelector('#app > #body').innerHTML = loginFormHTML;
 });
         this.dom.querySelector("#app>#menu #menuItems #logoutLink")?.addEventListener('click', e => this.logout());
         this.dom.querySelector("#app>#menu #menuItems #updateLink")?.addEventListener('click', e => this.updateInfo());
