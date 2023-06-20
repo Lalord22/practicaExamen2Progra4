@@ -285,9 +285,12 @@ renderLogin = () => {
         } else {
             if (globalstate.user.tipo === 1) {
                 html += `
-        <li class="nav-item">
-          <a class="nav-link" id="polizas" href="#"> <span><i class="fas fa-file-alt"></i></span> Polizas </a>
+        <li class="nav-item" style="display: flex; justify-content: flex-end;>
+            <a class="nav-link" id="infoLink" href="#" data-bs-toggle="modal">
+                <img src="images/info.png" alt="Info" style="width: 25px; height: 25px; " />
+            </a>
         </li>
+                
       `;
             }
             if (globalstate.user.tipo === 2) {
@@ -310,12 +313,14 @@ renderLogin = () => {
       `;
             }
             html += `
-    <li class="nav-item">
-        <a class="nav-link" id="updateLink" href="#"> <span><i class="fas fa-user-edit"></i></span> Datos Personales </a>
-      </li>
+    
       <li class="nav-item">
-        <a class="nav-link" id="logoutLink" href="#" data-bs-toggle="modal"> <span><i class="fas fa-power-off"></i></span> Logout (${globalstate.user.cedula}) </a>
-      </li>
+  <a class="nav-link" id="logoutLink" href="#" data-bs-toggle="modal">
+    <img src="images/logout.png" alt="Logout" style="width: 25px; height: 25px;">
+     (User : ${globalstate.user.cedula})
+  </a>
+       </li>
+
     `;
         }
         this.dom.querySelector('#app>#menu #menuItems').replaceChildren();
