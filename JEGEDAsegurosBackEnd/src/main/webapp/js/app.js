@@ -255,7 +255,7 @@ renderLogin = () => {
           <span class="input-group-text">Clave</span>
           <input type="password" class="form-control" id="clave" name="clave">
         </div>
-        <button id="apply" type="button" class="btn btn-primary" id="apply">Login</button>
+         <button id="apply" type="button" class="btn btn-primary" id="apply">Login</button>
         <span style="font-style: italic; margin-left: 2em; color: #555;">No tiene cuenta? ...</span>
         <a id="registerLink" class="btn btn-info btn-block" style="margin-bottom: 15px; background-color: #005b99; color: white; border: none;" href="#">Regístrese aquí</a>
       </form>
@@ -271,10 +271,16 @@ renderLogin = () => {
         if (globalstate.user === null) {
             html +=  `
       <li class="nav-item" style="display: flex; justify-content: flex-end;>
+        <a class="nav-link" id="infoLink" href="#" data-bs-toggle="modal">
+          <img src="images/info.png" alt="Info" style="width: 25px; height: 25px; " />
+        </a>
+      </li>
+      <li class="nav-item" style="display: flex; justify-content: flex-end;>
         <a class="nav-link" id="loginLink" href="#" data-bs-toggle="modal">
           <img src="images/login.png" alt="Login" style="width: 25px; height: 25px; " />
         </a>
       </li>
+      
     `;
         } else {
             if (globalstate.user.tipo === 1) {
@@ -326,6 +332,8 @@ renderLogin = () => {
   
   // Replace the body content, excluding the banner, with the login form HTML
   document.querySelector('#app > #body').innerHTML = loginFormHTML;
+  
+  document.querySelector('#apply').addEventListener('click', this.login);
 });
         this.dom.querySelector("#app>#menu #menuItems #logoutLink")?.addEventListener('click', e => this.logout());
         this.dom.querySelector("#app>#menu #menuItems #updateLink")?.addEventListener('click', e => this.updateInfo());
