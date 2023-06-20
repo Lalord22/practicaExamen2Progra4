@@ -335,6 +335,14 @@ renderLogin = () => {
   
   document.querySelector('#apply').addEventListener('click', this.login);
 });
+       this.dom.querySelector("#app>#menu #menuItems #infoLink")?.addEventListener('click', () => {
+  // Call the renderBodyFiller method to generate the body filler content HTML
+  const infoFormHTML = this.renderBodyFiller();
+
+  // Replace the body content, excluding the banner, with the body filler content HTML
+  document.querySelector('#app > #body > .left-half > .mission').innerHTML = infoFormHTML;
+});
+
         this.dom.querySelector("#app>#menu #menuItems #logoutLink")?.addEventListener('click', e => this.logout());
         this.dom.querySelector("#app>#menu #menuItems #updateLink")?.addEventListener('click', e => this.updateInfo());
         this.dom.querySelector("#registerLink")?.addEventListener('click', e => this.registrationModal.show());
