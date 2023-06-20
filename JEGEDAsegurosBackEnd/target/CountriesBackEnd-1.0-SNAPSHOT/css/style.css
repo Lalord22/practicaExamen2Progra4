@@ -1,0 +1,38 @@
+body{
+    background-image: url("../images/background.jpg");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;     
+}
+
+img.logo{
+    width: 100px;
+    height: auto;
+}
+
+img.filler{
+    width: 500px;
+    height: auto;    
+}
+
+img.flag{
+    width: 200px;
+    height: auto;    
+}
+.carro {
+  width: 100px; /* Ancho deseado */
+  height: auto; /* Altura ajustada automáticamente */
+}
+
+.categoria-div {
+  margin-bottom: 10px;
+}
+
+.categoria-div h4 {
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.categoria-div div {
+  margin-left: 20px;
+}
