@@ -224,22 +224,46 @@ class App {
     `;
     }
 
-    renderBodyFiller = () => {
+  renderBodyFiller = () => {
   var html = `
     <div id='bodyFiller' style='margin-left: 10%; margin-top:40px; width: 80%; text-align: center; font-size: 1.5em'>
-      <div class="banner">
+      <div class="banner" style="background-color: lightblue;">
         <h1>Welcome</h1>
       </div>
-      <div class="left-half">
-        <div class="mission">
+      <div class="left-half" style="background-color: gray;">
+        
           <h2>We are a non-profit training company</h2>
-        </div>
+        
       </div>
+      
     </div>
   `;
   this.dom.querySelector('#app>#body').replaceChildren();
   this.dom.querySelector('#app>#body').innerHTML = html;
 }
+
+renderLogin = () => {
+  var html = `
+    <div id="loginForm">
+      <h5 class="modal-title mb-0">Login</h5>
+      <form id="form">
+        <div class="input-group mb-3">
+          <span class="input-group-text">Id</span>
+          <input type="text" class="form-control" id="identificacion" name="identificacion">
+        </div>
+        <div class="input-group mb-3">
+          <span class="input-group-text">Clave</span>
+          <input type="password" class="form-control" id="clave" name="clave">
+        </div>
+        <button id="apply" type="button" class="btn btn-primary" id="apply">Login</button>
+        <span style="font-style: italic; margin-left: 2em; color: #555;">No tiene cuenta? ...</span>
+        <a id="registerLink" class="btn btn-info btn-block" style="margin-bottom: 15px; background-color: #005b99; color: white; border: none;" href="#">Regístrese aquí</a>
+      </form>
+    </div>
+  `;
+  return html;
+};
+
 
 
     renderMenuItems = () => {
@@ -296,7 +320,13 @@ class App {
         this.dom.querySelector("#app>#menu #menuItems #addModelo")?.addEventListener('click', e => this.modelosShow());
         this.dom.querySelector("#app>#menu #menuItems #addMarca")?.addEventListener('click', e => this.marcasShow());
         this.dom.querySelector("#app>#menu #menuItems #displayClientes")?.addEventListener('click', e => this.clientesShow());
-        this.dom.querySelector("#app>#menu #menuItems #loginLink")?.addEventListener('click', e => this.modal.show());
+        this.dom.querySelector("#app>#menu #menuItems #loginLink")?.addEventListener('click', () => {
+  // Call the renderLogin method to generate the login form HTML
+  const loginFormHTML = this.renderLogin();
+  
+  // Append the login form HTML to the body
+  document.body.innerHTML += loginFormHTML;
+});
         this.dom.querySelector("#app>#menu #menuItems #logoutLink")?.addEventListener('click', e => this.logout());
         this.dom.querySelector("#app>#menu #menuItems #updateLink")?.addEventListener('click', e => this.updateInfo());
         this.dom.querySelector("#registerLink")?.addEventListener('click', e => this.registrationModal.show());
