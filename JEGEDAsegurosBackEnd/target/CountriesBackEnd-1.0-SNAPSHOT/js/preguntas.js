@@ -161,16 +161,24 @@ class Preguntas {
                     <tr>
                         <th>Options:</th>
                         <td>
-                            <ul>
-                                <li>${pregunta.respuesta1}</li>
-                                <li>${pregunta.respuesta2}</li>
-                                <li>${pregunta.respuesta3}</li>
-                            </ul>
+                            <label>
+                                <input type="radio" name="option" value="${pregunta.respuesta1}">
+                                ${pregunta.respuesta1}
+                            </label>
+                            <label>
+                                <input type="radio" name="option" value="${pregunta.respuesta2}">
+                                ${pregunta.respuesta2}
+                            </label>
+                            <label>
+                                <input type="radio" name="option" value="${pregunta.respuesta3}">
+                                ${pregunta.respuesta3}
+                            </label>
                         </td>
                     </tr>
                 </tbody>
             </table>
             <button type="button" class="btn btn-primary" id="submit">Submit</button>
+            <button type="button" class="btn btn-secondary" id="close">Close</button>
         </div>
     `;
 
@@ -181,13 +189,25 @@ class Preguntas {
     // Attach event listener to the submit button
     const submitButton = opcionesContainer.querySelector('#submit');
     submitButton.addEventListener('click', () => {
-        // Handle submit action here
-        // You can add your own logic or call a function to handle the submit action
-        console.log('Submit button clicked!');
+        const selectedOption = document.querySelector('input[name="option"]:checked');
+        if (selectedOption) {
+            const optionValue = selectedOption.value;
+            console.log('Selected option:', optionValue);
+            // Handle submit action here with the selected option
+            // You can add your own logic or call a function to handle the submit action
+        } else {
+            console.log('No option selected.');
+        }
     });
 
-   
+    // Attach event listener to the close button
+    const closeButton = opcionesContainer.querySelector('#close');
+    closeButton.addEventListener('click', () => {
+        opcionesContainer.remove(); // Remove the opcionesContainer from the DOM
+    });
 }
+
+
 
 
 }
