@@ -1,4 +1,4 @@
-class Polizas {
+class Preguntas {
     constructor() {
         this.state = {
             entities: [], // Initialize entities as an empty array
@@ -6,7 +6,7 @@ class Polizas {
         };
         this.dom = this.render();
         this.modal = new bootstrap.Modal(this.dom.querySelector('#modal'));
-        this.dom.querySelector('#create').addEventListener('click', () => this.showAddModal()); // Call showAddModal on create button click
+    
         this.dom.querySelector('#search').addEventListener('click', () => this.search());
     }
 
@@ -19,15 +19,13 @@ class Polizas {
           <div class="card-body mx-auto w-75">
             <form id="form">
               <div class="input-group mb-3">
-                <span class="input-group-text">Placa</span>
+                <span class="input-group-text">Topic</span>
                 <input id="name" type="text" class="form-control">
                 <div class="btn-toolbar">
                   <div class="btn-group me-2">
                     <button type="button" class="btn btn-primary" id="search">Buscar</button>
                   </div>
-                  <div class="btn-group me-2">
-                    <button type="button" class="btn btn-primary" id="create">Agregar</button>
-                  </div>
+ 
                 </div>
               </div>
             </form>
@@ -36,14 +34,9 @@ class Polizas {
               <table class="table table-striped table-hover">
                 <thead>
                   <tr>
-                    <th scope="col">ID</th>
-                    <th scope="col">Placa</th>
-                    <th scope="col">Año</th>
-                    <th scope="col">Valor</th>
-                    <th scope="col">Plazo</th>
-                    <th scope="col">Fecha de Inicio</th>
-                    <th scope="col">Modelo</th>
-                    <th scope="col">Auto</th>
+                    <th scope="col">Question</th>
+                    <th scope="col">Topic</th>
+                    
                   </tr>
                 </thead>
                 <tbody id="listbody"></tbody>
@@ -110,9 +103,7 @@ class Polizas {
         const polizasContainer = document.createElement('div');
         polizasContainer.innerHTML = html;
 
-        // Add event listener to the "Agregar" button
-        const createButton = polizasContainer.querySelector('#create');
-        createButton.addEventListener('click', () => this.showAddModal());
+       
 
         return polizasContainer;
     }
@@ -142,12 +133,7 @@ class Polizas {
         tr.innerHTML = `
       <td>${p.id}</td>
       <td>${p.numeroPlaca}</td>
-      <td>${p.anno}</td>
-      <td>${p.valorAsegurado}</td>
-      <td>${p.plazoPago}</td>
-      <td>${p.fechaInicio}</td>
-      <td>${p.modelo.descripcion}</td>
-      <td><img class="carro" src="${backend}/modelos/${p.modelo.id}/carro"></td>`;
+        `;
         
          // Agrega el evento de clic a la fila de la tabla
         tr.addEventListener('click', () => this.showPolizaPopup(p));

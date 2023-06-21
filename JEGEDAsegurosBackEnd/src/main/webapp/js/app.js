@@ -7,7 +7,7 @@ class App {
 
     state; // state variables: if any
 
-    polizas; //
+    preguntas; //
     clientes;
     marcas;
     modelos;
@@ -24,7 +24,7 @@ class App {
         this.dom.querySelector('#registerLink').addEventListener('click', e => this.openRegistrationModal());
         this.renderBodyFiller(); //Cuando la pagina se abre por primera vez, esto imprime el body del website
         this.renderMenuItems(); // Esto carga las opciones en el banner
-        this.polizas = new Polizas();
+        this.preguntas = new Preguntas();
         this.marcas = new Marcas();
         this.modelos = new Modelos();
         this.categorias = new Categorias();
@@ -98,7 +98,7 @@ class App {
     `;
     }
 
-    renderMenu = () => {
+    renderMenu = () => {   //banner
         return `
       <nav id="menu" class="navbar navbar-expand-lg p-0 navbar-dark bg-black">
         <div class="container-fluid">
@@ -295,25 +295,6 @@ renderLogin = () => {
                 
       `;
             }
-            if (globalstate.user.tipo === 2) {
-                html += `
-        <li class="nav-item">
-          <a class="nav-link" id="addCobertura" href="#"> <span><i class="fas fa-plus"></i></span> Coberturas </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" id="addCategoria" href="#"> <span><i class="fas fa-plus"></i></span> Categorias </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" id="addModelo" href="#"> <span><i class="fas fa-plus"></i></span> Modelos </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" id="addMarca" href="#"> <span><i class="fas fa-plus"></i></span> Marcas </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" id="displayClientes" href="#"> <span><i class="fas fa-users"></i></span> Clientes </a>
-        </li>
-      `;
-            }
             html += `
     
       <li class="nav-item">
@@ -327,7 +308,7 @@ renderLogin = () => {
         }
         this.dom.querySelector('#app>#menu #menuItems').replaceChildren();
         this.dom.querySelector('#app>#menu #menuItems').innerHTML = html;
-        this.dom.querySelector("#app>#menu #menuItems #polizas")?.addEventListener('click', e => this.polizasShow());
+        this.dom.querySelector("#app>#menu #menuItems #preguntas")?.addEventListener('click', e => this.preguntasShow());
         this.dom.querySelector("#app>#menu #menuItems #addCobertura")?.addEventListener('click', e => this.coberturasShow());
         this.dom.querySelector("#app>#menu #menuItems #addCategoria")?.addEventListener('click', e => this.categoriasShow());
         this.dom.querySelector("#app>#menu #menuItems #addModelo")?.addEventListener('click', e => this.modelosShow());
@@ -356,15 +337,15 @@ renderLogin = () => {
         if (globalstate.user !== null) {
             switch (globalstate.user.rol) {
                 case 'CLI':
-                    this.polizasShow();
+                    this.preguntasShow();  //cambiar aca para mostrar preguntas
                     break;
             }
         }
     }
 
-    polizasShow = () => {
-        this.dom.querySelector('#app>#body').replaceChildren(this.polizas.dom);
-        this.polizas.list();
+    preguntasShow = () => {
+        this.dom.querySelector('#app>#body').replaceChildren(this.preguntas.dom);
+        this.preguntas.list();
     }
 
     marcasShow = () => {

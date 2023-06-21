@@ -46,19 +46,26 @@ public class Service {
     ModeloDao modeloDao;
     MarcaDao marcaDao;
 
-    private Service() {
+   private List<Usuario> usuarios;
 
-        relDatabase = new RelDatabase();
-        usuarioDao = new UsuarioDao(relDatabase);
-        clienteDao = new ClienteDao(relDatabase);
-        polizaDao = new PolizaDao(relDatabase);
-        coberturaDao = new CoberturaDao(relDatabase);
-        categoriaDao = new CategoriaDao(relDatabase);
-        modeloDao = new ModeloDao(relDatabase);
-        marcaDao = new MarcaDao(relDatabase);
+private Service() {
+    relDatabase = new RelDatabase();
+    usuarioDao = new UsuarioDao(relDatabase);
+    clienteDao = new ClienteDao(relDatabase);
+    polizaDao = new PolizaDao(relDatabase);
+    coberturaDao = new CoberturaDao(relDatabase);
+    categoriaDao = new CategoriaDao(relDatabase);
+    modeloDao = new ModeloDao(relDatabase);
+    marcaDao = new MarcaDao(relDatabase);
+    
+    usuarios = new ArrayList<>(); // Initialize the usuarios list
+    
+    Usuario usuario = new Usuario("111","12345678",0);
+    
+    // Add the usuario object to the usuarios list
+    usuarios.add(usuario);
+}
 
-       
-    }
 
     
 
@@ -69,10 +76,14 @@ public class Service {
         return usuario;
     }
     
-    public Usuario usuarioFindById(String cedula) throws Exception {  //implementado
-        Usuario usuario = usuarioDao.readById(cedula);
-        return usuario;
+   public Usuario usuarioFindById(String cedula) throws Exception {
+    for (Usuario usuario : usuarios) {
+        if (usuario.getCedula().equals(cedula)) {
+            return usuario;
+        }
     }
+    throw new Exception("Usuario not found for cedula: " + cedula);
+}
 
     public Cliente clienteFind(Usuario usuario) throws Exception {  //implementado, la ruta contiene /categorias
         return clienteDao.read(usuario.getCedula());
