@@ -73,4 +73,8 @@ public class Service {
         return filteredPreguntas;
     }
 
+    public boolean revisarRespuesta(Pregunta pregunta, String respuesta) {
+        return pregunta.getRespuestaCorrecta() == respuesta;
+    }
+
 }

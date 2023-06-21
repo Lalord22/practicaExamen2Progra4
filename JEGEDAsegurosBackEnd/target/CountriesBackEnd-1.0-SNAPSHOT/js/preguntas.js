@@ -144,68 +144,101 @@ class Preguntas {
     }
 
     muestraLasOpcionesDeLaPregunta(pregunta) {
-    console.log('muestraLasOpcionesDeLaPregunta called!');
+  console.log('muestraLasOpcionesDeLaPregunta called!');
 
-    const html = `
-        <div id="opciones" style="float: right; width: 50%;">
-            <table class="table table-striped">
-                <tbody>
-                    <tr>
-                        <th>Description:</th>
-                        <td>${pregunta.pregunta}</td>
-                    </tr>
-                    <tr>
-                        <th>Topic:</th>
-                        <td>${pregunta.topic}</td>
-                    </tr>
-                    <tr>
-                        <th>Options:</th>
-                        <td>
-                            <label>
-                                <input type="radio" name="option" value="${pregunta.respuesta1}">
-                                ${pregunta.respuesta1}
-                            </label>
-                            <label>
-                                <input type="radio" name="option" value="${pregunta.respuesta2}">
-                                ${pregunta.respuesta2}
-                            </label>
-                            <label>
-                                <input type="radio" name="option" value="${pregunta.respuesta3}">
-                                ${pregunta.respuesta3}
-                            </label>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-            <button type="button" class="btn btn-primary" id="submit">Submit</button>
-            <button type="button" class="btn btn-secondary" id="close">Close</button>
-        </div>
-    `;
+  const html = `
+    <div id="opciones" style="float: right; width: 50%;">
+      <table class="table table-striped">
+        <tbody>
+          <tr>
+            <th>Description:</th>
+            <td>${pregunta.pregunta}</td>
+          </tr>
+          <tr>
+            <th>Topic:</th>
+            <td>${pregunta.topic}</td>
+          </tr>
+          <tr>
+            <th>Options:</th>
+            <td>
+              <label>
+                <input type="radio" name="option" value="${pregunta.respuesta1}">
+                ${pregunta.respuesta1}
+              </label>
+              <label>
+                <input type="radio" name="option" value="${pregunta.respuesta2}">
+                ${pregunta.respuesta2}
+              </label>
+              <label>
+                <input type="radio" name="option" value="${pregunta.respuesta3}">
+                ${pregunta.respuesta3}
+              </label>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <button type="button" class="btn btn-primary" id="submit">Submit</button>
+      <button type="button" class="btn btn-secondary" id="close">Close</button>
+    </div>
+  `;
 
-    const opcionesContainer = document.createElement('div');
-    opcionesContainer.innerHTML = html;
-    document.body.appendChild(opcionesContainer);
+  const existingOpcionesContainer = document.getElementById('opciones');
+  if (existingOpcionesContainer) {
+    existingOpcionesContainer.remove(); // Remove any existing opcionesContainer
+  }
 
-    // Attach event listener to the submit button
-    const submitButton = opcionesContainer.querySelector('#submit');
-    submitButton.addEventListener('click', () => {
-        const selectedOption = document.querySelector('input[name="option"]:checked');
-        if (selectedOption) {
-            const optionValue = selectedOption.value;
-            console.log('Selected option:', optionValue);
-            // Handle submit action here with the selected option
-            // You can add your own logic or call a function to handle the submit action
-        } else {
-            console.log('No option selected.');
-        }
-    });
+  const opcionesContainer = document.createElement('div');
+  opcionesContainer.innerHTML = html;
+  document.body.appendChild(opcionesContainer);
 
-    // Attach event listener to the close button
-    const closeButton = opcionesContainer.querySelector('#close');
-    closeButton.addEventListener('click', () => {
-        opcionesContainer.remove(); // Remove the opcionesContainer from the DOM
-    });
+  // Attach event listener to the submit button
+  const submitButton = opcionesContainer.querySelector('#submit');
+  submitButton.addEventListener('click', () => {
+    const selectedOption = document.querySelector('input[name="option"]:checked');
+    if (selectedOption) {
+      const optionValue = selectedOption.value;
+      console.log('Selected option:', optionValue);
+
+      // Create an object with the pregunta and optionValue
+      const data = {
+        pregunta: pregunta,
+        optionValue: optionValue
+      };
+
+      // Send the data to your RESTful service
+      fetch('/preguntas/submit', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+      })
+        .then(response => {
+          if (response.ok) {
+            console.log('Submit successful!');
+            // Handle successful submission if needed
+          } else {
+            console.log('Submit failed.');
+            // Handle failed submission if needed
+          }
+        })
+        .catch(error => {
+          console.log('Submit error:', error);
+          // Handle error if needed
+        });
+    } else {
+      console.log('No option selected.');
+    }
+  });
+
+  // Attach event listener to the close button
+  const closeButton = opcionesContainer.querySelector('#close');
+  closeButton.addEventListener('click', () => {
+    opcionesContainer.remove(); // Remove the opcionesContainer from the DOM
+  });
 }
+
+
 
 
 
