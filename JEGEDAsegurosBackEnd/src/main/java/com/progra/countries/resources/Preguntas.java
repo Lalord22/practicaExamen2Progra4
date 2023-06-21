@@ -1,6 +1,7 @@
 package com.progra.countries.resources;
 
 
+import com.progra.countries.logic.Pregunta;
 import com.progra.countries.logic.Service;
 
 import com.progra.countries.logic.Usuario;
@@ -21,36 +22,33 @@ import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.Response;
 import java.util.ArrayList;
 
-@Path("/polizas")
+@Path("/preguntas")
 @PermitAll
-public class Polizas {
+public class Preguntas {
 
     
 
     
 
     @GET
-    @Path("/findByPlaca/{placa}")
+    @Path("/buscaTopic/{topic}")
     @Produces(MediaType.APPLICATION_JSON)
     @RolesAllowed({ "CLI"})
-    public List<PolizaDTO> polizaFindPlaca(@PathParam("placa") String placa, @Context HttpServletRequest request) throws Exception {
-        List<PolizaDTO> polizasCliente = muestraPolizasCliente(request); // Call muestraPolizasCliente passing the HttpServletRequest
-        List<PolizaDTO> filteredPolizas = new ArrayList<>();
-
-        for (PolizaDTO poliza : polizasCliente) {
-            if (poliza.getNumeroPlaca().equals(placa)) {
-                filteredPolizas.add(poliza);
-            }
-        }
-
-        return filteredPolizas;
+    public List<Pregunta> listaPreguntasPorTopic(@PathParam("topic") String topic, @Context HttpServletRequest request) throws Exception {
+        return Service.instance().retornaPreguntasPorTopic(topic) ;
     }
 
    
     
     
 
-    
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    @RolesAllowed({ "CLI"})
+    public List<Pregunta> CargarPreguntas() throws Exception {
+        
+        return Service.instance().cargarPreguntas();
+    }
 
     
 

@@ -109,7 +109,7 @@ class Preguntas {
     }
 
     list() {
-        const request = new Request(`${backend}/polizas/cliente`, {method: 'GET', headers: {}});
+        const request = new Request(`${backend}/preguntas`, {method: 'GET', headers: {}});
         (async () => {
             try {
                 const response = await fetch(request);
@@ -131,8 +131,8 @@ class Preguntas {
     row(list, p) {
         const tr = document.createElement('tr');
         tr.innerHTML = `
-      <td>${p.id}</td>
-      <td>${p.numeroPlaca}</td>
+      <td>${p.pregunta}</td>
+      <td>${p.topic}</td>
         `;
         
          // Agrega el evento de clic a la fila de la tabla
@@ -394,7 +394,7 @@ search() {
     return;
   }
 
-  const request = new Request(`${backend}/polizas/findByPlaca/${searchInput}`, {
+  const request = new Request(`${backend}/preguntas/buscaTopic/${searchInput}`, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
@@ -492,7 +492,7 @@ closeAllModals() {
   });
 }
 
-  showPolizaPopup(poliza) {
+  showPolizaPopup(pregunta) {
   // Create the HTML content of the popup with the poliza details
   const html = `
     <div class="modal fade" id="poliza-modal" tabindex="-1" role="dialog" aria-labelledby="poliza-modal-label" aria-hidden="true">
@@ -505,8 +505,8 @@ closeAllModals() {
             </button>
           </div>
           <div class="modal-body">
-            <p>ID: ${poliza.id}</p>
-            <p>Placa: ${poliza.numeroPlaca}</p>
+            <p>ID: ${pregunta.pregunta}</p>
+            <p>Placa: ${pregunta.respuesta1}</p>
             <p>Año: ${poliza.anno}</p>
             <p>Valor Asegurado: ${poliza.valorAsegurado}</p>
             <p>Plazo de Pago: ${poliza.plazoPago}</p>

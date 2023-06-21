@@ -1,7 +1,7 @@
 package com.progra.countries;
 
 import com.progra.countries.resources.Login;
-import com.progra.countries.resources.Marcas;
+import com.progra.countries.resources.Preguntas;
 
 import jakarta.annotation.security.DeclareRoles;
 import jakarta.ws.rs.ApplicationPath;
@@ -19,8 +19,8 @@ public class JakartaRestConfiguration extends Application {
     @Override
     public Set<Class<?>> getClasses() {
         HashSet<Class<?>> classes = new HashSet<>();
-        classes.add(Marcas.class);
         classes.add(Login.class);
+        classes.add(Preguntas.class);
         return classes;
     }      
 }
