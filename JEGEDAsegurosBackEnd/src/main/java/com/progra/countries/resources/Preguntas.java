@@ -44,7 +44,7 @@ public class Preguntas {
     public Boolean submitRespuesta(PreguntaOptionData preguntaOptionData) {
         // Extract the pregunta and option value from the received data
         Pregunta pregunta = preguntaOptionData.getPregunta();
-        String optionValue = preguntaOptionData.getOptionValue();
+        String optionValue = preguntaOptionData.getRespuesta();
 
         // Invoke your service class or perform necessary operations with pregunta and optionValue
         // ...

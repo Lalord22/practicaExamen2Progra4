@@ -1,17 +1,9 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package com.progra.countries.logic;
 
-/**
- *
- * @author lalo2
- */
 public class PreguntaOptionData {
     
-    Pregunta pregunta;
-    String optionValue;
+    private Pregunta pregunta;
+    private String respuesta;
 
     public Pregunta getPregunta() {
         return pregunta;
@@ -21,12 +13,12 @@ public class PreguntaOptionData {
         this.pregunta = pregunta;
     }
 
-    public String getOptionValue() {
-        return optionValue;
+    public String getRespuesta() {
+        return respuesta;
     }
 
-    public void setOpcionValue(String opcionValue) {
-        this.optionValue = opcionValue;
+    public void setRespuesta(String respuesta) {
+        this.respuesta = respuesta;
     }
 
     public PreguntaOptionData() {

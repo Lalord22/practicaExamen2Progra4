@@ -9,7 +9,6 @@ import java.util.ArrayList;
 
 import java.util.List;
 
-
 /**
  *
  * @author Escinf
@@ -36,19 +35,23 @@ public class Service {
         respuestas = new ArrayList<>();
 
         Usuario usuario1 = new Usuario("111", "12345678", 0);
-        Pregunta pregunta1 = new Pregunta(1,"Not Object Oriented?", "Prog, Lang", "C++", "C", "Java");
-        Pregunta pregunta2 = new Pregunta(2,"What is java?", "Prog, Lang", "Language", "Class", "Pattern");
-        Pregunta pregunta3 = new Pregunta(3,"What is Integer", "Prog, Data", "Language", "Data Type", "Number");
+        Pregunta pregunta1 = new Pregunta(1, "Not Object Oriented?", "Prog, Lang", "C++", "C", "Java");
+        Pregunta pregunta2 = new Pregunta(2, "What is java?", "Prog, Lang", "Language", "Class", "Pattern");
+        Pregunta pregunta3 = new Pregunta(3, "What is Integer", "Prog, Data", "Language", "Data Type", "Number");
 
         Respuesta respuesta1 = new Respuesta(1, "C");
         Respuesta respuesta2 = new Respuesta(2, "Language");
         Respuesta respuesta3 = new Respuesta(3, "Data Type");
-        
+
         // Add the usuario object to the usuarios list
         usuarios.add(usuario1);
         preguntas.add(pregunta1);
         preguntas.add(pregunta2);
         preguntas.add(pregunta3);
+
+        respuestas.add(respuesta1);
+        respuestas.add(respuesta2);
+        respuestas.add(respuesta3);
     }
 
     public Usuario usuarioFindById(String cedula) throws Exception {
@@ -89,11 +92,16 @@ public class Service {
     }
 
     if (correctRespuesta != null) {
-        // Compare the given respuesta with the correct respuesta
-        return respuesta.equals(correctRespuesta.getRespuesta());
+        String correctAnswer = correctRespuesta.getRespuesta();
+        System.out.println("Correct Answer: " + correctAnswer);
+        System.out.println("Given Answer: " + respuesta);
+
+        if (respuesta != null && respuesta.trim().equalsIgnoreCase(correctAnswer.trim())) {
+            return true;
+        }
     }
 
-    return false; // Pregunta ID not found in respuestas array
+    return false; // Pregunta ID not found in respuestas array or incorrect respuesta
 }
 
 

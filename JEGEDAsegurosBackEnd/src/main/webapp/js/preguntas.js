@@ -51,7 +51,7 @@ class Preguntas {
     }
 
     list() {
-        const request = new Request(`${backend}/preguntas`, { method: 'GET', headers: {} });
+        const request = new Request(`${backend}/preguntas`, {method: 'GET', headers: {}});
         (async () => {
             try {
                 const response = await fetch(request);
@@ -202,7 +202,7 @@ class Preguntas {
                 // Create an object with the pregunta and optionValue
                 const data = {
                     pregunta: pregunta,
-                    optionValue: optionValue
+                    respuesta: optionValue
                 };
 
                 // Send the data to your RESTful service
@@ -213,23 +213,53 @@ class Preguntas {
                     },
                     body: JSON.stringify(data)
                 })
-                    .then(response => {
-                        if (response.ok) {
-                            console.log('Submit successful!');
-                            this.renderCorrectAnswerModal();
-                        } else {
-                            console.log('Submit failed.');
-                            // Handle failed submission if needed
-                        }
-                    })
-                    .catch(error => {
-                        console.log('Submit error:', error);
-                        // Handle error if needed
-                    });
+                        .then(response => {
+                            if (response.ok) {
+                                return response.json();
+                            } else {
+                                console.log('Submit failed.');
+                                // Handle failed submission if needed
+                            }
+                        })
+                        .then(responseData => {
+                            if (responseData === true) {
+                                console.log('Submit successful!');
+                                renderCorrectAnswerModal();
+                            } else if (responseData === false) {
+                                console.log('Incorrect answer.');
+                                // Handle incorrect answer if needed
+                            } else {
+                                console.log('Unexpected response.');
+                                // Handle unexpected response if needed
+                            }
+                        })
+                        .catch(error => {
+                            console.log('Submit error:', error);
+                            // Handle error if needed
+                        });
             } else {
                 console.log('No option selected.');
             }
         });
+
+        function renderCorrectAnswerModal() {
+            // Create the modal element
+            var modal = document.createElement("div");
+            modal.classList.add("modal");
+
+            // Create the modal content
+            var modalContent = document.createElement("div");
+            modalContent.classList.add("modal-content");
+            modalContent.textContent = "Correct!";
+
+            // Append the content to the modal
+            modal.appendChild(modalContent);
+
+            // Append the modal to the body
+            document.body.appendChild(modal);
+        }
+
+
 
         // Attach event listener to the close button
         const closeButton = opcionesContainer.querySelector('#close');
