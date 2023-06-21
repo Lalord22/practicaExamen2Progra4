@@ -144,43 +144,42 @@ class Preguntas {
     }
 
     muestraLasOpcionesDeLaPregunta(pregunta) {
-        console.log('muestraLasOpcionesDeLaPregunta called!');
 
         const html = `
-    <div id="opciones" style="float: right; width: 50%;">
-      <table class="table table-striped">
-        <tbody>
-          <tr>
-            <th>Description:</th>
-            <td>${pregunta.pregunta}</td>
-          </tr>
-          <tr>
-            <th>Topic:</th>
-            <td>${pregunta.topic}</td>
-          </tr>
-          <tr>
-            <th>Options:</th>
-            <td>
-              <label>
-                <input type="radio" name="option" value="${pregunta.respuesta1}">
-                ${pregunta.respuesta1}
-              </label>
-              <label>
-                <input type="radio" name="option" value="${pregunta.respuesta2}">
-                ${pregunta.respuesta2}
-              </label>
-              <label>
-                <input type="radio" name="option" value="${pregunta.respuesta3}">
-                ${pregunta.respuesta3}
-              </label>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-      <button type="button" class="btn btn-primary" id="submit">Submit</button>
-      <button type="button" class="btn btn-secondary" id="close">Close</button>
-    </div>
-  `;
+        <div id="opciones" style="float: right; width: 50%;">
+            <table class="table table-striped">
+                <tbody>
+                    <tr>
+                        <th>Description:</th>
+                        <td>${pregunta.pregunta}</td>
+                    </tr>
+                    <tr>
+                        <th>Topic:</th>
+                        <td>${pregunta.topic}</td>
+                    </tr>
+                    <tr>
+                        <th>Options:</th>
+                        <td>
+                            <label>
+                                <input type="radio" name="option" value="${pregunta.respuesta1}">
+                                ${pregunta.respuesta1}
+                            </label>
+                            <label>
+                                <input type="radio" name="option" value="${pregunta.respuesta2}">
+                                ${pregunta.respuesta2}
+                            </label>
+                            <label>
+                                <input type="radio" name="option" value="${pregunta.respuesta3}">
+                                ${pregunta.respuesta3}
+                            </label>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <button type="button" class="btn btn-primary" id="submit">Submit</button>
+            <button type="button" class="btn btn-secondary" id="close">Close</button>
+        </div>
+    `;
 
         const existingOpcionesContainer = document.getElementById('opciones');
         if (existingOpcionesContainer) {
@@ -215,18 +214,27 @@ class Preguntas {
                 })
                         .then(response => {
                             if (response.ok) {
-                                return response.json();
+                                return response.json(); // Extract the response data
                             } else {
                                 console.log('Submit failed.');
                                 // Handle failed submission if needed
                             }
                         })
                         .then(responseData => {
+                            console.log('Response:', responseData); // Log the response data for debugging purposes
+
                             if (responseData === true) {
                                 console.log('Submit successful!');
-                                renderCorrectAnswerModal();
+                                renderConfirmationModal('Correct!', () => {
+                                    // Code to execute when confirmed
+
+                                });
                             } else if (responseData === false) {
                                 console.log('Incorrect answer.');
+                                renderConfirmationModal('Incorrect!', () => {
+                                    // Code to execute when confirmed
+
+                                });
                                 // Handle incorrect answer if needed
                             } else {
                                 console.log('Unexpected response.');
@@ -241,25 +249,6 @@ class Preguntas {
                 console.log('No option selected.');
             }
         });
-
-        function renderCorrectAnswerModal() {
-            // Create the modal element
-            var modal = document.createElement("div");
-            modal.classList.add("modal");
-
-            // Create the modal content
-            var modalContent = document.createElement("div");
-            modalContent.classList.add("modal-content");
-            modalContent.textContent = "Correct!";
-
-            // Append the content to the modal
-            modal.appendChild(modalContent);
-
-            // Append the modal to the body
-            document.body.appendChild(modal);
-        }
-
-
 
         // Attach event listener to the close button
         const closeButton = opcionesContainer.querySelector('#close');
@@ -290,6 +279,7 @@ class Preguntas {
 
         document.body.appendChild(modal);
     }
+
 }
 
 // Initialize the Preguntas class
@@ -300,3 +290,65 @@ document.body.appendChild(preguntas.dom);
 
 // Call the list() method to populate the table with data
 preguntas.list();
+function renderConfirmationModal(message, callback) {
+    const modal = document.createElement('div');
+    modal.className = 'modal fade';
+    modal.id = 'confirmationModal';
+    modal.setAttribute('tabindex', '-1');
+    modal.setAttribute('aria-labelledby', 'confirmationModalLabel');
+    modal.setAttribute('aria-hidden', 'true');
+
+    const modalDialog = document.createElement('div');
+    modalDialog.className = 'modal-dialog';
+
+    const modalContent = document.createElement('div');
+    modalContent.className = 'modal-content';
+
+    const modalHeader = document.createElement('div');
+    modalHeader.className = 'modal-header';
+
+    const modalTitle = document.createElement('h5');
+    modalTitle.className = 'modal-title';
+    modalTitle.id = 'confirmationModalLabel';
+    modalTitle.textContent = '';   //   <---- El titulo del pop up
+
+    const modalBody = document.createElement('div');
+    modalBody.className = 'modal-body';
+    modalBody.textContent = message;
+
+    const modalFooter = document.createElement('div');
+    modalFooter.className = 'modal-footer';
+
+    const confirmButton = document.createElement('button');
+    confirmButton.type = 'button';
+    confirmButton.className = 'btn btn-primary';
+    confirmButton.textContent = 'Aceptar';
+
+
+    modalFooter.appendChild(confirmButton);
+    modalHeader.appendChild(modalTitle);
+    modalContent.appendChild(modalHeader);
+    modalContent.appendChild(modalBody);
+    modalContent.appendChild(modalFooter);
+    modalDialog.appendChild(modalContent);
+    modal.appendChild(modalDialog);
+
+    document.body.appendChild(modal);
+
+    // Show the modal
+    const confirmationModal = new bootstrap.Modal(modal);
+    confirmationModal.show();
+
+    // Handle confirm button click
+    confirmButton.addEventListener('click', () => {
+        confirmationModal.hide();
+        if (typeof callback === 'function') {
+            callback();
+        }
+    });
+
+    // Remove the modal from the DOM when hidden
+    modal.addEventListener('hidden.bs.modal', () => {
+        modal.remove();
+    });
+}

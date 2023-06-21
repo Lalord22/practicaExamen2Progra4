@@ -93,8 +93,7 @@ public class Service {
 
     if (correctRespuesta != null) {
         String correctAnswer = correctRespuesta.getRespuesta();
-        System.out.println("Correct Answer: " + correctAnswer);
-        System.out.println("Given Answer: " + respuesta);
+        
 
         if (respuesta != null && respuesta.trim().equalsIgnoreCase(correctAnswer.trim())) {
             return true;
