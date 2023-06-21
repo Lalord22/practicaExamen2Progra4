@@ -225,12 +225,14 @@ class Preguntas {
 
                             if (responseData === true) {
                                 console.log('Submit successful!');
+                                this.list();
                                 renderConfirmationModal('Correct!', () => {
                                     // Code to execute when confirmed
 
                                 });
                             } else if (responseData === false) {
                                 console.log('Incorrect answer.');
+                                this.list();
                                 renderConfirmationModal('Incorrect!', () => {
                                     // Code to execute when confirmed
 

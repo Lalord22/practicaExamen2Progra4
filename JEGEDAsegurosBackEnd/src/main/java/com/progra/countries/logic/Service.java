@@ -55,6 +55,8 @@ public class Service {
     }
 
     public Usuario usuarioFindById(String cedula) throws Exception {
+        
+        
         for (Usuario usuario : usuarios) {
             if (usuario.getCedula().equals(cedula)) {
                 return usuario;
@@ -64,23 +66,35 @@ public class Service {
     }
 
     public List<Pregunta> cargarPreguntas() {
-        return preguntas;
+        
+        List<Pregunta> filteredPreguntas = new ArrayList<>();
+        
+         for (Pregunta pregunta : preguntas) {
+            if (pregunta.isRespuestaContestada() == false) {
+                filteredPreguntas.add(pregunta);
+            }
+        }
+        return filteredPreguntas;
     }
 
     public List<Pregunta> retornaPreguntasPorTopic(String topic) {
         List<Pregunta> filteredPreguntas = new ArrayList<>();
-
+        
         for (Pregunta pregunta : preguntas) {
-            if (pregunta.getTopic().contains(topic)) {
+            if (pregunta.isRespuestaContestada() == false && pregunta.getTopic().contains(topic)) {
                 filteredPreguntas.add(pregunta);
             }
         }
+
+        
 
         return filteredPreguntas;
     }
 
     public boolean revisarRespuesta(Pregunta pregunta, String respuesta) {
     int preguntaId = pregunta.getId();
+    
+    cambiarEstadoDeContestacionDePregunta(pregunta);
 
     // Find the corresponding respuesta object based on pregunta ID
     Respuesta correctRespuesta = null;
@@ -94,6 +108,7 @@ public class Service {
     if (correctRespuesta != null) {
         String correctAnswer = correctRespuesta.getRespuesta();
         
+        
 
         if (respuesta != null && respuesta.trim().equalsIgnoreCase(correctAnswer.trim())) {
             return true;
@@ -103,5 +118,13 @@ public class Service {
     return false; // Pregunta ID not found in respuestas array or incorrect respuesta
 }
 
+    void cambiarEstadoDeContestacionDePregunta(Pregunta preguntaEntrante){
+        for (Pregunta pregunta : preguntas) {
+            if (preguntaEntrante.getId() == pregunta.getId()) {
+                pregunta.setRespuestaContestada(true);
+            }
+        }
+    }
+    
 
 }
