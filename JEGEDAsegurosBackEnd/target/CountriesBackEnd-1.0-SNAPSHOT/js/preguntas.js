@@ -5,53 +5,48 @@ class Preguntas {
             mode: '',
         };
         this.dom = this.render();
-       
+
 
         this.dom.querySelector('#search').addEventListener('click', () => this.search());
     }
 
     render() {
         const html = `
-    <div id="polizas">
-      <div id="list" class="container">
-        <div class="card bg-light">
-          <h4 class="card-title mt-3 text-center">Polizas</h4>
-          <div class="card-body mx-auto w-75">
-            <form id="form">
-              <div class="input-group mb-3">
-                <span class="input-group-text">Topic</span>
-                <input id="name" type="text" class="form-control">
-                <div class="btn-toolbar">
-                  <div class="btn-group me-2">
-                    <button type="button" class="btn btn-primary" id="search">Buscar</button>
-                  </div>
- 
+        <br>
+        <div id="polizas" style="float: left; width: 50%;">
+            <div id="list" class="container">
+                <div class="card bg-light">
+                    <br>
+                    <div class="card-body mx-auto w-75">
+                        <form id="form">
+                            <div class="input-group mb-3">
+                                <span class="input-group-text">Topic</span>
+                                <input id="name" type="text" class="form-control">
+                                <div class="btn-toolbar">
+                                    <div class="btn-group me-2">
+                                        <button type="button" class="btn btn-primary" id="search">Buscar</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                        <div class="table-responsive" style="max-height: 300px; overflow: auto">
+                            <table class="table table-striped table-hover">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Question</th>
+                                        <th scope="col">Topic</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="listbody"></tbody>
+                            </table>
+                        </div>
+                    </div>
                 </div>
-              </div>
-            </form>
-
-            <div class="table-responsive" style="max-height: 300px; overflow: auto">
-              <table class="table table-striped table-hover">
-                <thead>
-                  <tr>
-                    <th scope="col">Question</th>
-                    <th scope="col">Topic</th>
-                    
-                  </tr>
-                </thead>
-                <tbody id="listbody"></tbody>
-              </table>
             </div>
-          </div>
         </div>
-      </div>
-      
     `;
         const polizasContainer = document.createElement('div');
         polizasContainer.innerHTML = html;
-
-
-
         return polizasContainer;
     }
 
@@ -75,15 +70,17 @@ class Preguntas {
         })();
     }
 
-    row(list, p) {
+    row(list, pregunta) {
         const tr = document.createElement('tr');
         tr.innerHTML = `
-      <td>${p.pregunta}</td>
-      <td>${p.topic}</td>
+      <td>${pregunta.pregunta}</td>
+      <td>${pregunta.topic}</td>
         `;
 
         // Agrega el evento de clic a la fila de la tabla
-        tr.addEventListener('click', () => this.showPolizaPopup(p));
+        tr.addEventListener('click', function () {
+            this.muestraLasOpcionesDeLaPregunta(pregunta);
+        }.bind(this));
 
         list.append(tr);
     }
@@ -145,6 +142,53 @@ class Preguntas {
             }
         })();
     }
+
+    muestraLasOpcionesDeLaPregunta(pregunta) {
+    console.log('muestraLasOpcionesDeLaPregunta called!');
+
+    const html = `
+        <div id="opciones" style="float: right; width: 50%;">
+            <table class="table table-striped">
+                <tbody>
+                    <tr>
+                        <th>Description:</th>
+                        <td>${pregunta.pregunta}</td>
+                    </tr>
+                    <tr>
+                        <th>Topic:</th>
+                        <td>${pregunta.topic}</td>
+                    </tr>
+                    <tr>
+                        <th>Options:</th>
+                        <td>
+                            <ul>
+                                <li>${pregunta.respuesta1}</li>
+                                <li>${pregunta.respuesta2}</li>
+                                <li>${pregunta.respuesta3}</li>
+                            </ul>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <button type="button" class="btn btn-primary" id="submit">Submit</button>
+        </div>
+    `;
+
+    const opcionesContainer = document.createElement('div');
+    opcionesContainer.innerHTML = html;
+    document.body.appendChild(opcionesContainer);
+
+    // Attach event listener to the submit button
+    const submitButton = opcionesContainer.querySelector('#submit');
+    submitButton.addEventListener('click', () => {
+        // Handle submit action here
+        // You can add your own logic or call a function to handle the submit action
+        console.log('Submit button clicked!');
+    });
+
+   
+}
+
 
 }
 
