@@ -12,27 +12,34 @@ import java.util.List;
  */
 public class Pregunta {
 
+    int id;
     private String pregunta;
     private String respuesta1;
     private String respuesta2;
     private String respuesta3;
     private String topic;    
-    private String respuestaCorrecta;
     private boolean respuestaContestada;
 
-    public Pregunta(String pregunta, String topic, String respuesta1, String respuesta2, String respuesta3, String respuestaCorrecta) {
+    public Pregunta(int id,String pregunta, String topic, String respuesta1, String respuesta2, String respuesta3) {
+       
+        this.id =id;
         this.pregunta = pregunta;
         this.topic = topic;
         this.respuesta1 = respuesta1;
         this.respuesta2 = respuesta2;
         this.respuesta3 = respuesta3;
-        this.respuestaCorrecta = respuestaCorrecta;
+      
         this.respuestaContestada = false;
     }
     
-    public boolean contestarPregunta(String respuesta){
-        this.respuestaContestada = true;
-        return respuesta == this.respuestaCorrecta;
+    public Pregunta(){}
+    
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
     
     public String getTopic() {
@@ -83,12 +90,6 @@ public class Pregunta {
         this.respuesta3 = respuesta3;
     }
 
-    public String getRespuestaCorrecta() {
-        return respuestaCorrecta;
-    }
-
-    public void setRespuestaCorrecta(String respuestaCorrecta) {
-        this.respuestaCorrecta = respuestaCorrecta;
-    }
+   
 
 }

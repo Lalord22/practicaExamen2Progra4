@@ -6,12 +6,8 @@
 package com.progra.countries.logic;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
+
 import java.util.List;
-import java.util.stream.Collectors;
-import java.sql.SQLException;
-import java.text.DecimalFormat;
 
 /**
  *
@@ -30,22 +26,32 @@ public class Service {
 
     private List<Usuario> usuarios;
     private List<Pregunta> preguntas;
+    private List<Respuesta> respuestas;
 
     private Service() {
 
         usuarios = new ArrayList<>(); // Initialize the usuarios list
         preguntas = new ArrayList<>(); // Initialize the preguntas list
+        respuestas = new ArrayList<>();
 
         Usuario usuario1 = new Usuario("111", "12345678", 0);
-        Pregunta pregunta1 = new Pregunta("Not Object Oriented?", "Prog, Lang", "C++", "C", "Java", "C");
-        Pregunta pregunta2 = new Pregunta("What is java?", "Prog, Lang", "Language", "Class", "Pattern", "Language");
-        Pregunta pregunta3 = new Pregunta("What is Integer", "Prog, Data", "Language", "Data Type", "Number", "Data Type");
+        Pregunta pregunta1 = new Pregunta(1, "Not Object Oriented?", "Prog, Lang", "C++", "C", "Java");
+        Pregunta pregunta2 = new Pregunta(2, "What is java?", "Prog, Lang", "Language", "Class", "Pattern");
+        Pregunta pregunta3 = new Pregunta(3, "What is Integer", "Prog, Data", "Language", "Data Type", "Number");
+
+        Respuesta respuesta1 = new Respuesta(1, "C");
+        Respuesta respuesta2 = new Respuesta(2, "Language");
+        Respuesta respuesta3 = new Respuesta(3, "Data Type");
 
         // Add the usuario object to the usuarios list
         usuarios.add(usuario1);
         preguntas.add(pregunta1);
         preguntas.add(pregunta2);
         preguntas.add(pregunta3);
+
+        respuestas.add(respuesta1);
+        respuestas.add(respuesta2);
+        respuestas.add(respuesta3);
     }
 
     public Usuario usuarioFindById(String cedula) throws Exception {
@@ -72,5 +78,31 @@ public class Service {
 
         return filteredPreguntas;
     }
+
+    public boolean revisarRespuesta(Pregunta pregunta, String respuesta) {
+    int preguntaId = pregunta.getId();
+
+    // Find the corresponding respuesta object based on pregunta ID
+    Respuesta correctRespuesta = null;
+    for (Respuesta resp : respuestas) {
+        if (resp.getId() == preguntaId) {
+            correctRespuesta = resp;
+            break;
+        }
+    }
+
+    if (correctRespuesta != null) {
+        String correctAnswer = correctRespuesta.getRespuesta();
+        System.out.println("Correct Answer: " + correctAnswer);
+        System.out.println("Given Answer: " + respuesta);
+
+        if (respuesta != null && respuesta.trim().equalsIgnoreCase(correctAnswer.trim())) {
+            return true;
+        }
+    }
+
+    return false; // Pregunta ID not found in respuestas array or incorrect respuesta
+}
+
 
 }
