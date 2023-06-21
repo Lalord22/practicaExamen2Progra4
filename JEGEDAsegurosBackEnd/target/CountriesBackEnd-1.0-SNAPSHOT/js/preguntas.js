@@ -226,6 +226,7 @@ class Preguntas {
                             if (responseData === true) {
                                 console.log('Submit successful!');
                                 this.list();
+                                opcionesContainer.remove();
                                 renderConfirmationModal('Correct!', () => {
                                     // Code to execute when confirmed
 
@@ -233,6 +234,7 @@ class Preguntas {
                             } else if (responseData === false) {
                                 console.log('Incorrect answer.');
                                 this.list();
+                                opcionesContainer.remove();
                                 renderConfirmationModal('Incorrect!', () => {
                                     // Code to execute when confirmed
 
