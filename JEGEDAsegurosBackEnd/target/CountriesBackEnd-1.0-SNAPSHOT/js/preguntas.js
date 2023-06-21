@@ -51,7 +51,7 @@ class Preguntas {
     }
 
     list() {
-        const request = new Request(`${backend}/preguntas`, {method: 'GET', headers: {}});
+        const request = new Request(`${backend}/preguntas`, { method: 'GET', headers: {} });
         (async () => {
             try {
                 const response = await fetch(request);
@@ -78,9 +78,9 @@ class Preguntas {
         `;
 
         // Agrega el evento de clic a la fila de la tabla
-        tr.addEventListener('click', function () {
+        tr.addEventListener('click', () => {
             this.muestraLasOpcionesDeLaPregunta(pregunta);
-        }.bind(this));
+        });
 
         list.append(tr);
     }
@@ -144,9 +144,9 @@ class Preguntas {
     }
 
     muestraLasOpcionesDeLaPregunta(pregunta) {
-  console.log('muestraLasOpcionesDeLaPregunta called!');
+        console.log('muestraLasOpcionesDeLaPregunta called!');
 
-  const html = `
+        const html = `
     <div id="opciones" style="float: right; width: 50%;">
       <table class="table table-striped">
         <tbody>
@@ -182,95 +182,91 @@ class Preguntas {
     </div>
   `;
 
-  const existingOpcionesContainer = document.getElementById('opciones');
-  if (existingOpcionesContainer) {
-    existingOpcionesContainer.remove(); // Remove any existing opcionesContainer
-  }
+        const existingOpcionesContainer = document.getElementById('opciones');
+        if (existingOpcionesContainer) {
+            existingOpcionesContainer.remove(); // Remove any existing opcionesContainer
+        }
 
-  const opcionesContainer = document.createElement('div');
-  opcionesContainer.innerHTML = html;
-  document.body.appendChild(opcionesContainer);
+        const opcionesContainer = document.createElement('div');
+        opcionesContainer.innerHTML = html;
+        document.body.appendChild(opcionesContainer);
 
-  // Attach event listener to the submit button
-  const submitButton = opcionesContainer.querySelector('#submit');
-  submitButton.addEventListener('click', () => {
-    const selectedOption = document.querySelector('input[name="option"]:checked');
-    if (selectedOption) {
-      const optionValue = selectedOption.value;
-      console.log('Selected option:', optionValue);
+        // Attach event listener to the submit button
+        const submitButton = opcionesContainer.querySelector('#submit');
+        submitButton.addEventListener('click', () => {
+            const selectedOption = document.querySelector('input[name="option"]:checked');
+            if (selectedOption) {
+                const optionValue = selectedOption.value;
+                console.log('Selected option:', optionValue);
 
-      // Create an object with the pregunta and optionValue
-      const data = {
-        pregunta: pregunta,
-        optionValue: optionValue
-      };
+                // Create an object with the pregunta and optionValue
+                const data = {
+                    pregunta: pregunta,
+                    optionValue: optionValue
+                };
 
-      // Send the data to your RESTful service
-      fetch('/preguntas/submit', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(data)
-      })
-        .then(response => {
-          if (response.ok) {
-            console.log('Submit successful!');
-            // Handle successful submission if needed
-          } else {
-            console.log('Submit failed.');
-            // Handle failed submission if needed
-          }
-        })
-        .catch(error => {
-          console.log('Submit error:', error);
-          // Handle error if needed
+                // Send the data to your RESTful service
+                fetch('http://localhost:8080/JEGEDAsegurosBackEnd/api/preguntas', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(data)
+                })
+                    .then(response => {
+                        if (response.ok) {
+                            console.log('Submit successful!');
+                            this.renderCorrectAnswerModal();
+                        } else {
+                            console.log('Submit failed.');
+                            // Handle failed submission if needed
+                        }
+                    })
+                    .catch(error => {
+                        console.log('Submit error:', error);
+                        // Handle error if needed
+                    });
+            } else {
+                console.log('No option selected.');
+            }
         });
-    } else {
-      console.log('No option selected.');
+
+        // Attach event listener to the close button
+        const closeButton = opcionesContainer.querySelector('#close');
+        closeButton.addEventListener('click', () => {
+            opcionesContainer.remove(); // Remove the opcionesContainer from the DOM
+        });
     }
-  });
 
-  // Attach event listener to the close button
-  const closeButton = opcionesContainer.querySelector('#close');
-  closeButton.addEventListener('click', () => {
-    opcionesContainer.remove(); // Remove the opcionesContainer from the DOM
-  });
+    renderCorrectAnswerModal() {
+        const modal = document.createElement('div');
+        modal.className = 'modal';
+
+        const content = document.createElement('div');
+        content.className = 'modal-content';
+
+        const message = document.createElement('p');
+        message.textContent = 'Correct!';
+
+        const closeButton = document.createElement('button');
+        closeButton.textContent = 'Close';
+        closeButton.addEventListener('click', () => {
+            modal.remove(); // Remove the modal from the DOM
+        });
+
+        content.appendChild(message);
+        content.appendChild(closeButton);
+        modal.appendChild(content);
+
+        document.body.appendChild(modal);
+    }
 }
 
+// Initialize the Preguntas class
+const preguntas = new Preguntas();
 
+// Append the rendered DOM to the document body
+document.body.appendChild(preguntas.dom);
 
-
-
-
-}
-
-// Usage example:
-const polizasTable = new Polizas();
-document.body.appendChild(polizasTable.dom);
-polizasTable.list(); // Call list() to fetch and display the polizas
-
-// Apply button click event listener
-polizasTable.dom.querySelector('#apply').addEventListener('click', () => {
-    const selectModelo = polizasTable.dom.querySelector('#selectModelo');
-    const placaInput = polizasTable.dom.querySelector('#placaInput');
-    const valorInput = polizasTable.dom.querySelector('#valorInput');
-    const yearInput = polizasTable.dom.querySelector('#yearInput');
-    const plazoInput = polizasTable.dom.querySelector('#plazoInput');
-    const startDateInput = polizasTable.dom.querySelector('#startDateInput');
-
-    // Create a new poliza object from the form data
-    const newPoliza = {
-        modelo: selectModelo.value,
-        numeroPlaca: placaInput.value,
-        valorAsegurado: valorInput.value,
-        anno: yearInput.value,
-        plazoPago: plazoInput.value,
-        fechaInicio: startDateInput.value,
-    };
-
-
-
-
-    polizasTable.createPoliza(newPoliza);
-});
+// Call the list() method to populate the table with data
+preguntas.list();
