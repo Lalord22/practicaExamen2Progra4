@@ -244,21 +244,23 @@ class App {
 
 renderLogin = () => {
   var html = `
+    <br>
     <div id="loginForm">
-      <h5 class="modal-title mb-0">Login</h5>
-      <form id="form">
-        <div class="input-group mb-3">
-          <span class="input-group-text">Id</span>
-          <input type="text" class="form-control" id="identificacion" name="identificacion">
-        </div>
-        <div class="input-group mb-3">
-          <span class="input-group-text">Clave</span>
-          <input type="password" class="form-control" id="clave" name="clave">
-        </div>
-         <button id="apply" type="button" class="btn btn-primary" id="apply">Login</button>
-        <span style="font-style: italic; margin-left: 2em; color: #555;">No tiene cuenta? ...</span>
-        <a id="registerLink" class="btn btn-info btn-block" style="margin-bottom: 15px; background-color: #005b99; color: white; border: none;" href="#">Regístrese aquí</a>
-      </form>
+      <div id="loginForm" style="border: 1px solid #ccc; padding: 20px; border-radius: 5px; text-align: center; margin: 0 auto; max-width: 400px;">
+  <h5 class="modal-title mb-0">Login</h5>
+  <form id="form">
+    <div class="input-group mb-3">
+      <span class="input-group-text">Id</span>
+      <input type="text" class="form-control" id="identificacion" name="identificacion">
+    </div>
+    <div class="input-group mb-3">
+      <span class="input-group-text">Clave</span>
+      <input type="password" class="form-control" id="clave" name="clave">
+    </div>
+    <button id="apply" type="button" class="btn btn-primary" id="apply">Login</button>
+   </form>
+</div>
+
     </div>
   `;
   return html;
