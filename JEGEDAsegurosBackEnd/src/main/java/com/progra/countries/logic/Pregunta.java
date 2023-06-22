@@ -5,6 +5,7 @@
 package com.progra.countries.logic;
 
 import java.util.List;
+import java.util.Random;
 
 /**
  *
@@ -32,7 +33,11 @@ public class Pregunta {
         this.respuestaContestada = false;
     }
     
-    public Pregunta(){}
+    public Pregunta(){
+    Random random = new Random();
+    this.id = random.nextInt(5000);
+    this.respuestaContestada = false;
+    }
     
     public int getId() {
         return id;

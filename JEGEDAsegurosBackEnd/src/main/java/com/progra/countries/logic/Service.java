@@ -125,6 +125,11 @@ public class Service {
             }
         }
     }
+
+    public void resgistraPreguntaYRespuesta(Pregunta pregunta, Respuesta respuesta) {
+        preguntas.add(pregunta);
+        respuestas.add(respuesta);
+    }
     
 
 }
