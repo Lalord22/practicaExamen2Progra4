@@ -64,13 +64,15 @@ public class Preguntas {
 
         Random random = new Random();
         int randomIdParaPreguntaYRespuesta = random.nextInt(5000);
-
+        
+        
+        
         Pregunta pregunta = preguntaOptionData.getPregunta();
         pregunta.setId(randomIdParaPreguntaYRespuesta);
 
-        Respuesta respuesta = new Respuesta();
-        respuesta.setId(randomIdParaPreguntaYRespuesta);
-        respuesta.setRespuesta(preguntaOptionData.getRespuesta());
+        Respuesta respuesta = new Respuesta(randomIdParaPreguntaYRespuesta,"a");
+       
+      
 
         try {
             Service.instance().resgistraPreguntaYRespuesta(pregunta, respuesta);

@@ -512,6 +512,7 @@ confirmButton.addEventListener('click', () => {
 
     // Create the request body object
     const nuevaPregunta = {
+      id:0,
       pregunta: pregunta,
       topic: topic,
       respuesta1: option1,
@@ -520,12 +521,12 @@ confirmButton.addEventListener('click', () => {
     };
 
     const nuevaRespuesta = {
-      respuesta: respuesta
+      respuesta: respuesta,
     };
 
     const requestBody = {
       pregunta: nuevaPregunta,
-      respuesta: nuevaRespuesta
+      respuesta: nuevaRespuesta,
     };
 
     // Make the HTTP POST request

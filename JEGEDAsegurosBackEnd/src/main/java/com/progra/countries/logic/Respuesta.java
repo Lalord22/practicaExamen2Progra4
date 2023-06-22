@@ -20,6 +20,8 @@ public class Respuesta {
         this.respuesta = respuesta;
     }
 
+    
+
     public int getId() {
         return id;
     }

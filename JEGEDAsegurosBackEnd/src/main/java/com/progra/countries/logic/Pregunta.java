@@ -34,9 +34,7 @@ public class Pregunta {
     }
     
     public Pregunta(){
-    Random random = new Random();
-    this.id = random.nextInt(5000);
-    this.respuestaContestada = false;
+    
     }
     
     public int getId() {
