@@ -236,7 +236,7 @@ class App {
             </a>
         </li>
         <li class="nav-item" >
-            <a class="nav-link" id="infoLink" href="#" data-bs-toggle="modal">
+            <a class="nav-link" id="questionLink" href="#" data-bs-toggle="modal">
           <img src="images/question.png" alt="Info" style="width: 25px; height: 25px; " />
         </a>
       </li>
@@ -276,6 +276,14 @@ class App {
             // Replace the body content, excluding the banner, with the body filler content HTML
             document.querySelector('#app > #body > .left-half > .mission').innerHTML = infoFormHTML;
         });
+        
+        this.dom.querySelector("#app>#menu #menuItems #questionLink")?.addEventListener('click', () => {
+            // Call the renderBodyFiller method to generate the body filler content HTML
+            const infoFormHTML = this.preguntasShow(); 
+
+            // Replace the body content, excluding the banner, with the body filler content HTML
+            document.querySelector('#app > #body > .left-half > .mission').innerHTML = infoFormHTML;
+        });
 
         this.dom.querySelector("#app>#menu #menuItems #logoutLink")?.addEventListener('click', e => this.logout());
 
@@ -283,7 +291,7 @@ class App {
         if (globalstate.user !== null) {
             switch (globalstate.user.rol) {
                 case 'CLI':
-                    this.preguntasShow();  //cambiar aca para mostrar preguntas
+                    this.preguntasShow();  
                     break;
             }
         }

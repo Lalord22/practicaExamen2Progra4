@@ -23,9 +23,9 @@ class Preguntas {
                                 <span class="input-group-text">Topic</span>
                                 <input id="name" type="text" class="form-control">
                                 <div class="btn-toolbar">
-                                    <div class="btn-group me-2">
-                                        <button type="button" class="btn btn-primary" id="search">Buscar</button>
-                                    </div>
+                                    <a class="nav-link" id="search" href="#" data-bs-toggle="modal">
+                                            <img src="images/search.png" alt="Info" style="width: 25px; height: 25px; margin-left: 10px; " />
+                                    </a>
                                 </div>
                             </div>
                         </form>
