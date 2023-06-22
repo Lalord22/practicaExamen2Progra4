@@ -6,7 +6,14 @@ class Preguntas {
         };
         this.dom = this.render();
 
-        this.dom.querySelector('#registerLink').addEventListener('click', () => renderAgregarModal(":)"));
+        this.dom.querySelector('#registerLink').addEventListener('click', () => {
+    renderAgregarModal(":)", () => {
+        // This code will be executed after renderAgregarModal is finished
+        preguntas.list();
+        list();
+        this.list();
+    });
+});
 
         this.dom.querySelector('#search').addEventListener('click', () => this.search());
     }
@@ -336,7 +343,7 @@ function renderConfirmationModal(message, callback) {
     });
 }
 
-function renderAgregarModal(message, callback) {
+async function renderAgregarModal(message, callback) {
     const modal = document.createElement('div');
     modal.className = 'modal fade';
     modal.id = 'confirmationModal';
@@ -496,7 +503,7 @@ function renderAgregarModal(message, callback) {
    confirmationModal.show();
 
 // Handle confirm button click
-confirmButton.addEventListener('click', () => {
+confirmButton.addEventListener('click', async () => {
   const nuevaPregunta = questionInput.value;
   const nuevoTopic = topicInput.value;
   const option1 = option1Input.value;
@@ -523,35 +530,25 @@ confirmButton.addEventListener('click', () => {
   respuesta: selectedRespuesta
 };
 
-    // Make the HTTP POST request
-fetch('http://localhost:8080/JEGEDAsegurosBackEnd/api/preguntas/nuevaPregunta', {
-  method: 'POST',
-  headers: {
-    'Content-Type': 'application/json'
-  },
-  body: JSON.stringify(requestBody)
-})
-  .then(response => {
-    if (response.status >= 200 && response.status < 300) {
-      // No response data expected, just return a resolved promise
-      return Promise.resolve();
-    } else {
-      throw new Error('Error occurred while adding the question');
-    }
-  })
-  .then(() => {
-    // Handle the successful response
-    console.log('Question added successfully');
-    // Call the list() function or perform any other necessary actions
-    preguntas.list();
-  })
-  .catch(error => {
-    // Handle the error
-    console.error(error);
-  });
-  } else {
-    alert('Please select the correct option');
-  }
+   try {
+                await fetch('http://localhost:8080/JEGEDAsegurosBackEnd/api/preguntas/nuevaPregunta', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(requestBody)
+                });
+
+                console.log('Question added successfully');
+                preguntas.list();
+                list();
+                this.preguntas.list();
+            } catch (error) {
+                console.error('Error occurred while adding the question', error);
+            }
+        } else {
+            alert('Please select the correct option');
+        }
 });
 
 
