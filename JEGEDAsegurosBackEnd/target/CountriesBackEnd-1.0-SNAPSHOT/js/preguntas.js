@@ -99,7 +99,7 @@ class Preguntas {
               <h5 class="modal-title" id="error-modal-label">Error</h5>
             </div>
             <div class="modal-body">
-              Ingrese un número de placa.
+              Escriba el topic antes de buscar
             </div>
           </div>
         </div>
@@ -261,28 +261,6 @@ class Preguntas {
         });
     }
 
-    renderCorrectAnswerModal() {
-        const modal = document.createElement('div');
-        modal.className = 'modal';
-
-        const content = document.createElement('div');
-        content.className = 'modal-content';
-
-        const message = document.createElement('p');
-        message.textContent = 'Correct!';
-
-        const closeButton = document.createElement('button');
-        closeButton.textContent = 'Close';
-        closeButton.addEventListener('click', () => {
-            modal.remove(); // Remove the modal from the DOM
-        });
-
-        content.appendChild(message);
-        content.appendChild(closeButton);
-        modal.appendChild(content);
-
-        document.body.appendChild(modal);
-    }
 
 }
 
