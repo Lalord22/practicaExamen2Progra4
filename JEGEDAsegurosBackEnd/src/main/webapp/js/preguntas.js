@@ -6,6 +6,7 @@ class Preguntas {
         };
         this.dom = this.render();
 
+        this.dom.querySelector('#registerLink').addEventListener('click', () => renderAgregarModal(":)",null));
 
         this.dom.querySelector('#search').addEventListener('click', () => this.search());
     }
@@ -26,6 +27,7 @@ class Preguntas {
                                     <a class="nav-link" id="search" href="#" data-bs-toggle="modal">
                                             <img src="images/search.png" alt="Info" style="width: 25px; height: 25px; margin-left: 10px; " />
                                     </a>
+                                            <a id="registerLink" class="btn btn-info btn-block" style="margin-bottom: 15px; background-color: #005b99; color: white; border: none;" href="#">Regístrese aquí</a>
                                 </div>
                             </div>
                         </form>
@@ -333,4 +335,148 @@ function renderConfirmationModal(message, callback) {
     modal.addEventListener('hidden.bs.modal', () => {
         modal.remove();
     });
+}
+
+function renderAgregarModal(message, callback) {
+  const modal = document.createElement('div');
+  modal.className = 'modal fade';
+  modal.id = 'confirmationModal';
+  modal.setAttribute('tabindex', '-1');
+  modal.setAttribute('aria-labelledby', 'confirmationModalLabel');
+  modal.setAttribute('aria-hidden', 'true');
+
+  const modalDialog = document.createElement('div');
+  modalDialog.className = 'modal-dialog';
+
+  const modalContent = document.createElement('div');
+  modalContent.className = 'modal-content';
+
+  const modalHeader = document.createElement('div');
+  modalHeader.className = 'modal-header';
+
+  const modalTitle = document.createElement('h5');
+  modalTitle.className = 'modal-title';
+  modalTitle.id = 'confirmationModalLabel';
+  modalTitle.textContent = 'Agregar nueva Pregunta'; // Title of the modal
+
+  const modalBody = document.createElement('div');
+  modalBody.className = 'modal-body';
+
+  const form = document.createElement('form');
+
+  // Question input
+  const questionInput = document.createElement('input');
+  questionInput.type = 'text';
+  questionInput.className = 'form-control';
+  questionInput.placeholder = 'Pregunta';
+  questionInput.required = true;
+
+  // Topic input
+  const topicInput = document.createElement('input');
+  topicInput.type = 'text';
+  topicInput.className = 'form-control';
+  topicInput.placeholder = ' Topic';
+  topicInput.required = true;
+
+  // Option 1 input
+  const option1Input = document.createElement('input');
+  option1Input.type = 'text';
+  option1Input.className = 'form-control';
+  option1Input.placeholder = 'Primera opcion';
+  option1Input.required = true;
+
+  // Option 2 input
+  const option2Input = document.createElement('input');
+  option2Input.type = 'text';
+  option2Input.className = 'form-control';
+  option2Input.placeholder = 'Segunda opcion';
+  option2Input.required = true;
+
+  // Option 3 input
+  const option3Input = document.createElement('input');
+  option3Input.type = 'text';
+  option3Input.className = 'form-control';
+  option3Input.placeholder = 'Tercera opcion';
+  option3Input.required = true;
+  
+  const modalRadio = document.createElement('h6');
+  modalRadio.className = 'modal-title';
+  modalRadio.id = 'confirmationModalLabel';
+  modalRadio.textContent = 'Seleccione cual opcion es la respuesta correcta'; // Title of the modal
+
+  // Radio buttons for selecting the correct option
+  const optionRadio1 = document.createElement('input');
+  optionRadio1.type = 'radio';
+  optionRadio1.name = 'correctOption';
+  optionRadio1.value = '1';
+  optionRadio1.required = true;
+
+  const optionRadio2 = document.createElement('input');
+  optionRadio2.type = 'radio';
+  optionRadio2.name = 'correctOption';
+  optionRadio2.value = '2';
+
+  const optionRadio3 = document.createElement('input');
+  optionRadio3.type = 'radio';
+  optionRadio3.name = 'correctOption';
+  optionRadio3.value = '3';
+
+  // Label for the radio buttons
+  const optionLabel1 = document.createElement('label');
+  optionLabel1.textContent = 'Marcar Correcta';
+  const optionLabel2 = document.createElement('label');
+  optionLabel2.textContent = 'Marcar Correcta';
+  const optionLabel3 = document.createElement('label');
+  optionLabel3.textContent = 'Marcar Correcta';
+
+  // Append the inputs and labels to the form
+  form.appendChild(questionInput);
+  form.appendChild(topicInput);
+  form.appendChild(modalRadio);
+  form.appendChild(option1Input);
+  form.appendChild(optionRadio1);
+  form.appendChild(optionLabel1);
+  form.appendChild(option2Input);
+  form.appendChild(optionRadio2);
+  form.appendChild(optionLabel2);
+  form.appendChild(option3Input);
+  form.appendChild(optionRadio3);
+  form.appendChild(optionLabel3);
+
+  modalBody.appendChild(form);
+
+  const modalFooter = document.createElement('div');
+  modalFooter.className = 'modal-footer';
+
+  const confirmButton = document.createElement('button');
+  confirmButton.type = 'button';
+  confirmButton.className = 'btn btn-primary';
+  confirmButton.textContent = 'Accept';
+
+  modalFooter.appendChild(confirmButton);
+  modalHeader.appendChild(modalTitle);
+  modalContent.appendChild(modalHeader);
+  modalContent.appendChild(modalBody);
+  modalContent.appendChild(modalFooter);
+  modalDialog.appendChild(modalContent);
+  modal.appendChild(modalDialog);
+
+  document.body.appendChild(modal);
+
+  // Show the modal
+  const confirmationModal = new bootstrap.Modal(modal);
+  confirmationModal.show();
+
+  // Handle confirm button click
+  confirmButton.addEventListener('click', () => {
+    confirmationModal.hide();
+    if (typeof callback === 'function') {
+      callback();
+    }
+  });
+
+  // Remove the modal from the DOM when hidden
+  modal.addEventListener('hidden.bs.modal', () => {
+    modal.remove();
+  });
 }

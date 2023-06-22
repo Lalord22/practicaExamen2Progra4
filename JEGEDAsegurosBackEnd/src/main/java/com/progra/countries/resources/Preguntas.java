@@ -52,4 +52,19 @@ public class Preguntas {
         // Return a response indicating the success or failure of the operation
         return Service.instance().revisarRespuesta(pregunta, optionValue);
     }
+    
+    @POST
+    @Path("/nuevaPregunta")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Boolean agregarPregunta(PreguntaOptionData preguntaOptionData) throws Exception {
+        // Extract the pregunta and option value from the received data
+        Pregunta pregunta = preguntaOptionData.getPregunta();
+        String optionValue = preguntaOptionData.getRespuesta();
+        
+
+        // Invoke your service class or perform necessary operations with pregunta and optionValue
+        // ...
+        // Return a response indicating the success or failure of the operation
+        return Service.instance().revisarRespuesta(pregunta, optionValue);
+    }
 }

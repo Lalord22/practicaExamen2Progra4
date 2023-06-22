@@ -240,7 +240,7 @@ class App {
           <img src="images/question.png" alt="Info" style="width: 25px; height: 25px; " />
         </a>
       </li>
-                
+              
       
     
       <li class="nav-item">
