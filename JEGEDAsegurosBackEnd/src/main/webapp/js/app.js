@@ -169,7 +169,7 @@ class App {
     `;
     }
 
-    renderBodyFiller = () => {
+    renderBodyFiller = () => {  //homepage
         var html = `
     <div id='bodyFiller' style='margin-left: 10%; margin-top:40px; width: 80%; text-align: center; font-size: 1.5em'>
       <div class="banner" style="background-color: lightblue;">
