@@ -15,7 +15,7 @@ public class Respuesta {
     public Respuesta() {
     }
 
-    Respuesta(int id, String respuesta) {
+    public Respuesta(int id, String respuesta) {
         this.id = id;
         this.respuesta = respuesta;
     }

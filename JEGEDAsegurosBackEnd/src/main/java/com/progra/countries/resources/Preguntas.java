@@ -56,31 +56,18 @@ public class Preguntas {
     }
 
     @POST
-    @Path("/nuevaPregunta")
-    @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response agregarPregunta(PreguntaOptionData preguntaOptionData) throws Exception {
-        // Extract the pregunta and option value from the received data
-
-        Random random = new Random();
-        int randomIdParaPreguntaYRespuesta = random.nextInt(5000);
-        
-        
-        
-        Pregunta pregunta = preguntaOptionData.getPregunta();
-        pregunta.setId(randomIdParaPreguntaYRespuesta);
-
-        Respuesta respuesta = new Respuesta(randomIdParaPreguntaYRespuesta,"a");
-       
-      
-
-        try {
-            Service.instance().resgistraPreguntaYRespuesta(pregunta, respuesta);
-            return Response.ok().build();
-        } catch (Exception e) {
-            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(e.getMessage()).build();
-        }
-
+@Path("/nuevaPregunta")
+@Consumes(MediaType.APPLICATION_JSON)
+public Response agregarPregunta(PreguntaOptionData preguntaOptionData) {
+    try {
+        Service.instance().resgistraPreguntaYRespuesta(preguntaOptionData);
+        return Response.ok().build();
+    } catch (Exception e) {
+        // Handle the exception and return an error response
+        return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
     }
+}
+
+
 
 }

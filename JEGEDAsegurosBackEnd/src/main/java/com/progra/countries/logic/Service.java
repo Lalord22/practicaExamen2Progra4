@@ -8,6 +8,7 @@ package com.progra.countries.logic;
 import java.util.ArrayList;
 
 import java.util.List;
+import java.util.Random;
 
 /**
  *
@@ -126,10 +127,25 @@ public class Service {
         }
     }
 
-    public void resgistraPreguntaYRespuesta(Pregunta pregunta, Respuesta respuesta) {
-        preguntas.add(pregunta);
-        respuestas.add(respuesta);
+    public void resgistraPreguntaYRespuesta(PreguntaOptionData preguntaOptionData) throws Exception {
+    Random random = new Random();
+    int randomNumber = random.nextInt(5000);
+
+    Pregunta preguntaNueva = preguntaOptionData.getPregunta();
+    preguntaNueva.setId(randomNumber);
+    preguntaNueva.setRespuestaContestada(false);
+
+    Respuesta respuesta = new Respuesta(randomNumber, preguntaOptionData.getRespuesta());
+
+    if (preguntaNueva == null || respuesta == null) {
+        throw new Exception("Invalid pregunta or respuesta data");
     }
-    
+
+    this.preguntas.add(preguntaNueva);
+    this.respuestas.add(respuesta);
+}
 
 }
+
+    
+

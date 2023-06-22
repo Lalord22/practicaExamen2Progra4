@@ -497,8 +497,8 @@ function renderAgregarModal(message, callback) {
 
 // Handle confirm button click
 confirmButton.addEventListener('click', () => {
-  const pregunta = questionInput.value;
-  const topic = topicInput.value;
+  const nuevaPregunta = questionInput.value;
+  const nuevoTopic = topicInput.value;
   const option1 = option1Input.value;
   const option2 = option2Input.value;
   const option3 = option3Input.value;
@@ -506,59 +506,54 @@ confirmButton.addEventListener('click', () => {
   const selectedOption = Array.from(document.querySelectorAll('input[name="correctOption"]')).find(option => option.checked);
   
   if (selectedOption) {
-    const respuesta = selectedOption.previousSibling.value; // Get the value of the selected radio button
+    const selectedRespuesta = selectedOption.previousSibling.value; // Get the value of the selected radio button
 
     confirmationModal.hide();
 
     // Create the request body object
-    const nuevaPregunta = {
-      id:0,
-      pregunta: pregunta,
-      topic: topic,
-      respuesta1: option1,
-      respuesta2: option2,
-      respuesta3: option3,
-    };
-
-    const nuevaRespuesta = {
-      respuesta: respuesta,
-    };
-
-    const requestBody = {
-      pregunta: nuevaPregunta,
-      respuesta: nuevaRespuesta,
-    };
+   const requestBody = {
+  pregunta: {
+    id: 0,
+    pregunta: nuevaPregunta,
+    topic: nuevoTopic,
+    respuesta1: option1,
+    respuesta2: option2,
+    respuesta3: option3
+  },
+  respuesta: selectedRespuesta
+};
 
     // Make the HTTP POST request
-    fetch('http://localhost:8080/JEGEDAsegurosBackEnd/api/preguntas/nuevaPregunta', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(requestBody)
-    })
-      .then(response => {
-        if (response.ok) {
-          // Return the response data
-          return response.json();
-        } else {
-          throw new Error('Error occurred while adding the question');
-        }
-      })
-      .then(data => {
-        // Handle the response data
-        console.log(data);
-        // Call the list() function or perform any other necessary actions
-        this.list();
-      })
-      .catch(error => {
-        // Handle the error
-        console.error(error);
-      });
+fetch('http://localhost:8080/JEGEDAsegurosBackEnd/api/preguntas/nuevaPregunta', {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json'
+  },
+  body: JSON.stringify(requestBody)
+})
+  .then(response => {
+    if (response.status >= 200 && response.status < 300) {
+      // No response data expected, just return a resolved promise
+      return Promise.resolve();
+    } else {
+      throw new Error('Error occurred while adding the question');
+    }
+  })
+  .then(() => {
+    // Handle the successful response
+    console.log('Question added successfully');
+    // Call the list() function or perform any other necessary actions
+    preguntas.list();
+  })
+  .catch(error => {
+    // Handle the error
+    console.error(error);
+  });
   } else {
     alert('Please select the correct option');
   }
 });
+
 
 
 
