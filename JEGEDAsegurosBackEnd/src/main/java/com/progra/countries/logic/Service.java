@@ -79,11 +79,11 @@ public class Service {
 }
 
 
-    public List<Pregunta> retornaPreguntasPorTopic(String topic) {
+    public List<Pregunta> retornaPreguntasPorTopic(List<Pregunta> preguntasFiltradas, String topic) {
         List<Pregunta> filteredPreguntas = new ArrayList<>();
         
-        for (Pregunta pregunta : preguntas) {
-            if (pregunta.isRespuestaContestada() == false && pregunta.getTopic().contains(topic)) {
+        for (Pregunta pregunta : preguntasFiltradas) {
+            if ( pregunta.getTopic().contains(topic)) {
                 filteredPreguntas.add(pregunta);
             }
         }

@@ -34,7 +34,9 @@ public class Preguntas {
     @Produces(MediaType.APPLICATION_JSON)
     @RolesAllowed({"CLI"})
     public List<Pregunta> listaPreguntasPorTopic(@PathParam("topic") String topic, @Context HttpServletRequest request) throws Exception {
-        return Service.instance().retornaPreguntasPorTopic(topic);
+        
+        List<Pregunta> cargarPreguntasSinContestar = cargarPreguntas( request);
+        return Service.instance().retornaPreguntasPorTopic(cargarPreguntasSinContestar, topic);
     }
     
     protected Usuario getLoggedInUser(HttpServletRequest request) {
