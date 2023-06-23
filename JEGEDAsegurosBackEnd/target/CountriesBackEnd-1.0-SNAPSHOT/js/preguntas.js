@@ -27,7 +27,7 @@ class Preguntas {
                                     <a class="nav-link" id="search" href="#" data-bs-toggle="modal">
                                             <img src="images/search.png" alt="Info" style="width: 25px; height: 25px; margin-left: 10px; " />
                                     </a>
-                                            <a id="registerLink" class="btn btn-info btn-block" style="margin-bottom: 15px; background-color: #005b99; color: white; border: none;" href="#">Regístrese aquí</a>
+                                            <a id="registerLink" class="btn btn-info btn-block" style="margin-left: 10px; margin-bottom: 15px; background-color: #005b99; color: white; border: none;" href="#">Agregar Nueva Pregunta</a>
                                 </div>
                             </div>
                         </form>
