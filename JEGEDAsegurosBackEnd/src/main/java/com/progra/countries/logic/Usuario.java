@@ -1,15 +1,10 @@
 package com.progra.countries.logic;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
-/*
- *Proyecto I Programacion 4
- * 
- *Jennifer Lobo Vasquez
- *Daniela Madrigal Morales
- *Gerardo Salzar Vargas
- * 
- */
+
 
 
 public class Usuario  implements java.io.Serializable {
@@ -18,27 +13,40 @@ public class Usuario  implements java.io.Serializable {
      private String cedula;
      private String clave;
      private Integer tipo;
+     private List<Respuesta> IdsDeRespuestasContestadas;
 
 
     public Usuario() {
         this.cedula = null;
         this.clave = null;
         this.tipo = 0;
+        this.IdsDeRespuestasContestadas = new ArrayList<>();
+    }
+
+    public List<Respuesta> getIdsDeRespuestasContestadas() {
+        return IdsDeRespuestasContestadas;
+    }
+
+    public void setIdsDeRespuestasContestadas(List<Respuesta> IdsDeRespuestasContestadas) {
+        this.IdsDeRespuestasContestadas = IdsDeRespuestasContestadas;
     }
 
 	
     public Usuario(String cedula) {
         this.cedula = cedula;
+         this.IdsDeRespuestasContestadas = new ArrayList<>();
     }
     public Usuario(String cedula, String clave, Integer tipo) {
        this.cedula = cedula;
        this.clave = clave;
        this.tipo = tipo;
+        this.IdsDeRespuestasContestadas = new ArrayList<>();
     }
 
     public Usuario(String username, String password) {
         this.cedula= username;
         this.clave = password;
+         this.IdsDeRespuestasContestadas = new ArrayList<>();
     }
    
     public String getCedula() {
