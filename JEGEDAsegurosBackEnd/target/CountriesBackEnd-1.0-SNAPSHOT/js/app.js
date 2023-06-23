@@ -345,11 +345,22 @@ class App {
     }
 
     logout = () => {
-        globalstate.user = null;
-        this.reset();
-        this.renderMenuItems();
-        this.renderBodyFiller();
-    }
+    globalstate.user = null;
+    this.reset();
+    this.renderMenuItems();
+    this.renderBodyFiller();
+
+    // Clear everything else in the body except the container element
+    const container = document.querySelector('#root');
+    document.body.innerHTML = '';
+    document.body.appendChild(container);
+
+    // Call the loaded function to initialize the app and render the components
+    loaded();
+}
+
+
+
 
     openRegistrationModal = () => {
         this.modal.hide();
