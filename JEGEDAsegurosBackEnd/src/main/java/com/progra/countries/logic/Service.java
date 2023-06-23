@@ -66,17 +66,18 @@ public class Service {
         throw new Exception("Usuario not found for cedula: " + cedula);
     }
 
-    public List<Pregunta> cargarPreguntas() {
-        
-        List<Pregunta> filteredPreguntas = new ArrayList<>();
-        
-         for (Pregunta pregunta : preguntas) {
-            if (pregunta.isRespuestaContestada() == false) {
-                filteredPreguntas.add(pregunta);
-            }
+    public List<Pregunta> cargarPreguntas(Usuario usuario) {
+    List<Pregunta> filteredPreguntas = new ArrayList<>();
+    
+    for (Pregunta pregunta : preguntas) {
+        if (!usuario.getIdsDeRespuestasContestadas().contains(pregunta.getId())) {
+            filteredPreguntas.add(pregunta);
         }
-        return filteredPreguntas;
     }
+    
+    return filteredPreguntas;
+}
+
 
     public List<Pregunta> retornaPreguntasPorTopic(String topic) {
         List<Pregunta> filteredPreguntas = new ArrayList<>();

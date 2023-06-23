@@ -13,7 +13,7 @@ public class Usuario  implements java.io.Serializable {
      private String cedula;
      private String clave;
      private Integer tipo;
-     private List<Respuesta> IdsDeRespuestasContestadas;
+     private List<Integer> IdsDeRespuestasContestadas;
 
 
     public Usuario() {
@@ -23,11 +23,11 @@ public class Usuario  implements java.io.Serializable {
         this.IdsDeRespuestasContestadas = new ArrayList<>();
     }
 
-    public List<Respuesta> getIdsDeRespuestasContestadas() {
+    public List<Integer> getIdsDeRespuestasContestadas() {
         return IdsDeRespuestasContestadas;
     }
 
-    public void setIdsDeRespuestasContestadas(List<Respuesta> IdsDeRespuestasContestadas) {
+    public void setIdsDeRespuestasContestadas(List<Integer> IdsDeRespuestasContestadas) {
         this.IdsDeRespuestasContestadas = IdsDeRespuestasContestadas;
     }
 
