@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package com.progra.countries.logic;
 
 import java.util.ArrayList;
@@ -36,6 +32,8 @@ public class Service {
         respuestas = new ArrayList<>();
 
         Usuario usuario1 = new Usuario("111", "12345678", 0);
+        Usuario usuario2 = new Usuario("222", "12345678", 0);
+        
         Pregunta pregunta1 = new Pregunta(1, "Not Object Oriented?", "Prog, Lang", "C++", "C", "Java");
         Pregunta pregunta2 = new Pregunta(2, "What is java?", "Prog, Lang", "Language", "Class", "Pattern");
         Pregunta pregunta3 = new Pregunta(3, "What is Integer", "Prog, Data", "Language", "Data Type", "Number");
@@ -46,6 +44,8 @@ public class Service {
 
         // Add the usuario object to the usuarios list
         usuarios.add(usuario1);
+        usuarios.add(usuario2);
+        
         preguntas.add(pregunta1);
         preguntas.add(pregunta2);
         preguntas.add(pregunta3);
@@ -93,10 +93,10 @@ public class Service {
         return filteredPreguntas;
     }
 
-    public boolean revisarRespuesta(Pregunta pregunta, String respuesta) {
+    public boolean revisarRespuesta(Pregunta pregunta, String respuesta, Usuario user) {
     int preguntaId = pregunta.getId();
     
-    cambiarEstadoDeContestacionDePregunta(pregunta);
+    cambiarEstadoDeContestacionDePregunta(pregunta, user);
 
     // Find the corresponding respuesta object based on pregunta ID
     Respuesta correctRespuesta = null;
@@ -120,12 +120,8 @@ public class Service {
     return false; // Pregunta ID not found in respuestas array or incorrect respuesta
 }
 
-    void cambiarEstadoDeContestacionDePregunta(Pregunta preguntaEntrante){
-        for (Pregunta pregunta : preguntas) {
-            if (preguntaEntrante.getId() == pregunta.getId()) {
-                pregunta.setRespuestaContestada(true);
-            }
-        }
+    void cambiarEstadoDeContestacionDePregunta(Pregunta preguntaEntrante, Usuario user){
+        user.getIdsDeRespuestasContestadas().add(preguntaEntrante.getId());
     }
 
     public void resgistraPreguntaYRespuesta(PreguntaOptionData preguntaOptionData) throws Exception {

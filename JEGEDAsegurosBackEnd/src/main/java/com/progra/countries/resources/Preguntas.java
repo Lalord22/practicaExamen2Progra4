@@ -62,15 +62,17 @@ public List<Pregunta> cargarPreguntas(@Context HttpServletRequest request) throw
 
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
-    public Boolean submitRespuesta(PreguntaOptionData preguntaOptionData) throws Exception {
+    public Boolean submitRespuesta(@Context HttpServletRequest request, PreguntaOptionData preguntaOptionData) throws Exception {
         // Extract the pregunta and option value from the received data
+         Usuario loggedInUser = getLoggedInUser(request);
+        
         Pregunta pregunta = preguntaOptionData.getPregunta();
         String optionValue = preguntaOptionData.getRespuesta();
 
         // Invoke your service class or perform necessary operations with pregunta and optionValue
         // ...
         // Return a response indicating the success or failure of the operation
-        return Service.instance().revisarRespuesta(pregunta, optionValue);
+        return Service.instance().revisarRespuesta(pregunta, optionValue, loggedInUser );
     }
 
     @POST
