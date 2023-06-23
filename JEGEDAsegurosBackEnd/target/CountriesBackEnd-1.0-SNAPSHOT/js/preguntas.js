@@ -6,14 +6,7 @@ class Preguntas {
         };
         this.dom = this.render();
 
-        this.dom.querySelector('#registerLink').addEventListener('click', () => {
-    renderAgregarModal(":)", () => {
-        // This code will be executed after renderAgregarModal is finished
-        preguntas.list();
-        list();
-        this.list();
-    });
-});
+        this.dom.querySelector('#registerLink').addEventListener('click', () => renderAgregarModal());
 
         this.dom.querySelector('#search').addEventListener('click', () => this.search());
     }
@@ -343,7 +336,7 @@ function renderConfirmationModal(message, callback) {
     });
 }
 
-async function renderAgregarModal(message, callback) {
+async function renderAgregarModal() {
     const modal = document.createElement('div');
     modal.className = 'modal fade';
     modal.id = 'confirmationModal';
@@ -500,37 +493,37 @@ async function renderAgregarModal(message, callback) {
 
     // Show the modal
     const confirmationModal = new bootstrap.Modal(modal);
-   confirmationModal.show();
+    confirmationModal.show();
 
 // Handle confirm button click
-confirmButton.addEventListener('click', async () => {
-  const nuevaPregunta = questionInput.value;
-  const nuevoTopic = topicInput.value;
-  const option1 = option1Input.value;
-  const option2 = option2Input.value;
-  const option3 = option3Input.value;
-  
-  const selectedOption = Array.from(document.querySelectorAll('input[name="correctOption"]')).find(option => option.checked);
-  
-  if (selectedOption) {
-    const selectedRespuesta = selectedOption.previousSibling.value; // Get the value of the selected radio button
+    confirmButton.addEventListener('click', async () => {
+        const nuevaPregunta = questionInput.value;
+        const nuevoTopic = topicInput.value;
+        const option1 = option1Input.value;
+        const option2 = option2Input.value;
+        const option3 = option3Input.value;
 
-    confirmationModal.hide();
+        const selectedOption = Array.from(document.querySelectorAll('input[name="correctOption"]')).find(option => option.checked);
 
-    // Create the request body object
-   const requestBody = {
-  pregunta: {
-    id: 0,
-    pregunta: nuevaPregunta,
-    topic: nuevoTopic,
-    respuesta1: option1,
-    respuesta2: option2,
-    respuesta3: option3
-  },
-  respuesta: selectedRespuesta
-};
+        if (selectedOption) {
+            const selectedRespuesta = selectedOption.previousSibling.value; // Get the value of the selected radio button
 
-   try {
+            confirmationModal.hide();
+
+            // Create the request body object
+            const requestBody = {
+                pregunta: {
+                    id: 0,
+                    pregunta: nuevaPregunta,
+                    topic: nuevoTopic,
+                    respuesta1: option1,
+                    respuesta2: option2,
+                    respuesta3: option3
+                },
+                respuesta: selectedRespuesta
+            };
+
+            try {
                 await fetch('http://localhost:8080/JEGEDAsegurosBackEnd/api/preguntas/nuevaPregunta', {
                     method: 'POST',
                     headers: {
@@ -540,16 +533,25 @@ confirmButton.addEventListener('click', async () => {
                 });
 
                 console.log('Question added successfully');
+                const existingOpcionesContainer = document.getElementById('polizas');
+                if (existingOpcionesContainer) {
+                    existingOpcionesContainer.remove(); // Remove any existing opcionesContainer
+                }
+
+                const preguntas = new Preguntas();
+
+// Append the rendered DOM to the document body
+                document.body.appendChild(preguntas.dom);
+
+// Call the list() method to populate the table with data
                 preguntas.list();
-                list();
-                this.preguntas.list();
             } catch (error) {
                 console.error('Error occurred while adding the question', error);
             }
         } else {
             alert('Please select the correct option');
         }
-});
+    });
 
 
 
