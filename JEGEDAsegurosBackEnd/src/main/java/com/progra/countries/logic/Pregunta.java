@@ -19,7 +19,6 @@ public class Pregunta {
     private String respuesta2;
     private String respuesta3;
     private String topic;    
-    private boolean respuestaContestada;
 
     public Pregunta(int id,String pregunta, String topic, String respuesta1, String respuesta2, String respuesta3) {
        
@@ -30,7 +29,7 @@ public class Pregunta {
         this.respuesta2 = respuesta2;
         this.respuesta3 = respuesta3;
       
-        this.respuestaContestada = false;
+        
     }
     
     public Pregunta(){
@@ -53,13 +52,7 @@ public class Pregunta {
         this.topic = topic;
     }
 
-    public boolean isRespuestaContestada() {
-        return respuestaContestada;
-    }
 
-    public void setRespuestaContestada(boolean respuestaContestada) {
-        this.respuestaContestada = respuestaContestada;
-    }
 
     public String getPregunta() {
         return pregunta;

@@ -12,19 +12,10 @@ class App {
         this.state = {};
         this.dom = this.render();
         this.modal = new bootstrap.Modal(this.dom.querySelector('#modal'));
-        this.registrationModal = new bootstrap.Modal(this.dom.querySelector('#registerModal'));
         this.dom.querySelector('#apply').addEventListener('click', e => this.login());
-        this.dom.querySelector('#registerLink').addEventListener('click', e => this.openRegistrationModal());
         this.renderBodyFiller(); //Cuando la pagina se abre por primera vez, esto imprime el body del website
         this.renderMenuItems(); // Esto carga las opciones en el banner
         this.preguntas = new Preguntas();
-
-
-        this.dom.querySelector('#registrationForm').addEventListener('submit', e => {
-            e.preventDefault(); // Prevent the default form submission behavior
-            this.register(); // Call the register method when the form is submitted
-        });
-
 
     }
 
@@ -34,7 +25,6 @@ class App {
       ${this.renderBody()}
       ${this.renderFooter()}
       ${this.renderModal()}
-      ${this.renderRegistrationModal()}
     `; //renderMenu esta relacionado al banner
 
         var rootContent = document.createElement('div');
@@ -114,53 +104,6 @@ class App {
               </div>
                 <span style="font-style: italic; margin-left: 2em; color: #555;">No tiene cuenta? ...</span>
                 <a id="registerLink" class="btn btn-info btn-block" style="margin-bottom: 15px; background-color: #005b99; color: white; border: none;" href="#">Regístrese aquí</a>
-              </div>
-            </form>
-          </div>
-        </div>
-      </div>
-    `;
-    }
-
-    renderRegistrationModal = () => {
-        return `
-      <div id="registerModal" class="modal fade" tabindex="-1">
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title">Cliente</h5>
-              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <form id="registrationForm">
-              <div class="modal-body">
-                <div class="input-group mb-3">
-                  <span class="input-group-text">Id</span>
-                  <input type="text" class="form-control" id="registrationId" name="cedula">
-                </div>
-                <div class="input-group mb-3">
-                  <span class="input-group-text">Name</span>
-                  <input type="text" class="form-control" id="registrationName" name="nombre">
-                </div>
-                <div class="input-group mb-3">
-                  <span class="input-group-text">Email</span>
-                  <input type="email" class="form-control" id="registrationEmail" name="correo">
-                </div>
-                <div class="input-group mb-3">
-                  <span class="input-group-text">Phone Number</span>
-                  <input type="text" class="form-control" id="registrationTelefono" name="telefono">
-                </div>
-                 <div class="input-group mb-3">
-                  <span class="input-group-text">Credit Card</span>
-                  <input type="text" class="form-control" id="registrationDatosTarjeta" name="datosTarjeta">
-                </div>
-                <div class="input-group mb-3">
-                  <span class="input-group-text">Password</span>
-                  <input type="password" class="form-control" id="registrationPassword" name="clave">
-                </div>
-              </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                <button type="submit" class="btn btn-primary">Registar</button>
               </div>
             </form>
           </div>
@@ -276,10 +219,10 @@ class App {
             // Replace the body content, excluding the banner, with the body filler content HTML
             document.querySelector('#app > #body > .left-half > .mission').innerHTML = infoFormHTML;
         });
-        
+
         this.dom.querySelector("#app>#menu #menuItems #questionLink")?.addEventListener('click', () => {
             // Call the renderBodyFiller method to generate the body filler content HTML
-            const infoFormHTML = this.preguntasShow(); 
+            const infoFormHTML = this.preguntasShow();
 
             // Replace the body content, excluding the banner, with the body filler content HTML
             document.querySelector('#app > #body > .left-half > .mission').innerHTML = infoFormHTML;
@@ -291,7 +234,7 @@ class App {
         if (globalstate.user !== null) {
             switch (globalstate.user.rol) {
                 case 'CLI':
-                    this.preguntasShow();  
+                    this.preguntasShow();
                     break;
             }
         }
@@ -345,101 +288,23 @@ class App {
     }
 
     logout = () => {
-    globalstate.user = null;
-    this.reset();
-    this.renderMenuItems();
-    this.renderBodyFiller();
+        globalstate.user = null;
+        this.reset();
+        this.renderMenuItems();
+        this.renderBodyFiller();
 
-    // Clear everything else in the body except the container element
-    const container = document.querySelector('#root');
-    document.body.innerHTML = '';
-    document.body.appendChild(container);
+        // Clear everything else in the body except the container element
+        const container = document.querySelector('#root');
+        document.body.innerHTML = '';
+        document.body.appendChild(container);
 
-    // Call the loaded function to initialize the app and render the components
-    loaded();
-}
-
-
-
-
-    openRegistrationModal = () => {
-        this.modal.hide();
-        this.registrationModal.show();
-    }
-
-    register = async () => {
-        const registrationForm = this.dom.querySelector('#app>#registerModal #registrationForm');
-        const formData = new FormData(registrationForm);
-
-        const usuarioData = {
-            cedula: document.getElementById("registrationId").value,
-            clave: document.getElementById("registrationPassword").value,
-            tipo: 1
-        };
-
-        const clienteData = {
-            cedula: document.getElementById("registrationId").value,
-            nombre: document.getElementById("registrationName").value,
-            telefono: document.getElementById("registrationTelefono").value,
-            correo: document.getElementById("registrationEmail").value,
-            datosTarjeta: document.getElementById("registrationDatosTarjeta").value,
-            usuario: {
-                cedula: document.getElementById("registrationId").value,
-                clave: document.getElementById("registrationPassword").value,
-                rol: "CLI",
-                tipo: 1,
-                username: document.getElementById("registrationId").value
-            }
-        };
-
-        try {
-            const usuarioResponse = await fetch('http://localhost:8080/JEGEDAsegurosBackEnd/api/usuarios/register', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(usuarioData)
-            });
-
-            if (usuarioResponse.ok) {
-                const clienteResponse = await fetch('http://localhost:8080/JEGEDAsegurosBackEnd/api/clientes/register', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(clienteData)
-                });
-
-                if (clienteResponse.ok) {
-                    // Registration successful for both Usuario and Cliente
-                    alert('Registration successful. You can now log in with your credentials.');
-                    this.registrationModal.hide();
-                    this.modal.show(); // Show the login modal after successful registration
-                } else if (clienteResponse.status === 409) {
-                    // Cliente already exists
-                    alert('A cliente with the same ID already exists. Please check your information.');
-                } else {
-                    // Registration failed for Cliente
-                    alert('An error occurred during cliente registration. Please try again later.');
-                }
-            } else if (usuarioResponse.status === 409) {
-                // Usuario already exists
-                alert('A usuario with the same ID already exists. Please check your information.');
-            } else {
-                // Registration failed for Usuario
-                alert('An error occurred during usuario registration. Please try again later.');
-            }
-        } catch (error) {
-            console.error('Error during registration:', error);
-            alert('An error occurred during registration. Please try again later.');
-        }
-    }
-
-    registrationModalShow = () => {
-        this.registrationModal.show();
+        // Call the loaded function to initialize the app and render the components
+        loaded();
     }
 
 }
+
+
 
 
 

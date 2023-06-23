@@ -130,7 +130,6 @@ public class Service {
 
     Pregunta preguntaNueva = preguntaOptionData.getPregunta();
     preguntaNueva.setId(randomNumber);
-    preguntaNueva.setRespuestaContestada(false);
 
     Respuesta respuesta = new Respuesta(randomNumber, preguntaOptionData.getRespuesta());
 
