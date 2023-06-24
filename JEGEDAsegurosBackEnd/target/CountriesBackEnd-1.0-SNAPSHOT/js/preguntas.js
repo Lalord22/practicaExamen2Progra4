@@ -505,6 +505,11 @@ async function renderAgregarModal() {
 
         const selectedOption = Array.from(document.querySelectorAll('input[name="correctOption"]')).find(option => option.checked);
 
+        if (!nuevaPregunta || !nuevoTopic || !option1 || !option2 || !option3) {
+            alert('Please fill in all the fields');
+            return;
+        }
+
         if (selectedOption) {
             const selectedRespuesta = selectedOption.previousSibling.value; // Get the value of the selected radio button
 
